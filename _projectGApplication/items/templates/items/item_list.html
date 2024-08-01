@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item List</title>
+</head>
+<body>
+    <h1>Item List</h1>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+    <!-- Add this inside your body tag -->
+    <form action="{% url 'toggle_led' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Toggle LED</button>
+    </form>
+
+    <form action="{% url 'down_led' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Down LED</button>
+    </form>
+
+</body>
+</html>

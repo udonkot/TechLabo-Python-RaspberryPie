@@ -21,6 +21,7 @@ pip insatll pygobject
 pip install rpi.gpio
 pip install azure-iot-device
 pip install python-dotenv
+pip install pygame
 ```
 
 when error , apt command

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if user.is_authenticated %}
+    <div class="h1">RaspberryPie 操作画面</div>
+{% else %}
+    <div class="h1">Main</div>
+{% endif %}
+{% endblock %}
+    
+{% block content %}
+{% if user.is_authenticated %}
+    <div id="contents">
+        <div id ="led">
+            <form method="post" action="{% url 'accounts:ledInit' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">LED初期化</button>
+            </form>
+            <br>
+            <form method="post" action="{% url 'accounts:ledAllLightOn' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">LED全点灯</button>
+            </form>
+            <br>
+            <form method="post" action="{% url 'accounts:ledAllLightOff' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">LED全消灯</button>
+            </form>
+            <br>
+            <form method="post" action="{% url 'accounts:ledAllBlink' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">LED全点滅</button>
+                <Input type="text" name="span" value="1">秒ごとに
+                <Input type="text" name="count" value="3">回点滅
+            </form>
+            <br>
+            <form method="post" action="{% url 'accounts:ledPattern' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">音声＋LED点滅</button>
+            </form>
+            <br>
+            <form method="post" action="{% url 'accounts:roundMotor' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">サーボモーター回転</button>
+                <Input type="text" name="count" value="3">回回転 
+            </form>
+        </div>
+
+        <br>
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+        
+    </div>
+
+    
+
+{% else %}
+    <a href="{% url 'accounts:login' %}" class="btn btn-secondary">Login</a>
+{% endif %}
+{% endblock %}
