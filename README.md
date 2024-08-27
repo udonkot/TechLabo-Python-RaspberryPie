@@ -22,7 +22,14 @@ pip install rpi.gpio
 pip install azure-iot-device
 pip install python-dotenv
 pip install pygame
+pip install django
 ```
+
+for windows...
+```
+pip install fake_rpi
+```
+
 
 when error , apt command
 
