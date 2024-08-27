@@ -1,62 +1,141 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 {% if user.is_authenticated %}
-    <div class="h1">RaspberryPie 操作画面</div>
+    <div class="h2">RaspberryPie 操作画面</div>
 {% else %}
-    <div class="h1">Main</div>
+    <div class="h2">Main</div>
 {% endif %}
+{% endblock %}
+
+{% block hoge %}
 {% endblock %}
     
 {% block content %}
 {% if user.is_authenticated %}
-    <div id="contents">
-        <div id ="led">
-            <form method="post" action="{% url 'accounts:ledInit' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">LED初期化</button>
-            </form>
-            <br>
-            <form method="post" action="{% url 'accounts:ledAllLightOn' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">LED全点灯</button>
-            </form>
-            <br>
-            <form method="post" action="{% url 'accounts:ledAllLightOff' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">LED全消灯</button>
-            </form>
-            <br>
-            <form method="post" action="{% url 'accounts:ledAllBlink' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">LED全点滅</button>
-                <Input type="text" name="span" value="1">秒ごとに
-                <Input type="text" name="count" value="3">回点滅
-            </form>
-            <br>
-            <form method="post" action="{% url 'accounts:ledPattern' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">音声＋LED点滅</button>
-            </form>
-            <br>
-            <form method="post" action="{% url 'accounts:roundMotor' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">サーボモーター回転</button>
-                <Input type="text" name="count" value="3">回回転 
-            </form>
+  <div id="contents">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">Item#1</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" role="tab" aria-controls="item2" aria-selected="false">Item#2</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" role="tab" aria-controls="item3" aria-selected="false">Item#3</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
+        <div id="switches">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_head" data-target="light-head">
+            <label class="custom-control-label" for="customSwitch_head">頭</label>
+            <div id="light-head" data-label="頭">頭の状態: ライトオフ</div>
+          </div>
+
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_eye" data-target="light-eyes">
+            <label class="custom-control-label" for="customSwitch_eye">目</label>
+            <div id="light-eyes" data-label="目">目の状態: ライトオフ</div>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_shoulder" data-target="light-shoulder">
+            <label class="custom-control-label" for="customSwitch_shoulder">肩</label>
+            <div id="light-shoulder" data-label="肩">肩の状態: ライトオフ</div>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest">
+            <label class="custom-control-label" for="customSwitch_body">胸</label>
+            <div id="light-chest" data-label="胸">胸の状態: ライトオフ</div>
+          </div>
         </div>
-
-        <br>
-        <form method="post" action="{% url 'accounts:logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Logout</button>
-        </form>
-        
+        <div class="image-container">
+          <img src="{% static 'images/MEGA_G.jpg' %}" alt="Sample Image" class="img-fluid">
+        </div>
+      </div>
+      <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
+        <div id ="led">
+          <form method="post" action="{% url 'accounts:ledInit' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">LED初期化</button>
+          </form>
+          <br>
+          <form method="post" action="{% url 'accounts:ledAllLightOn' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">LED全点灯</button>
+          </form>
+          <br>
+          <form method="post" action="{% url 'accounts:ledAllLightOff' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">LED全消灯</button>
+          </form>
+          <br>
+          <form method="post" action="{% url 'accounts:ledAllBlink' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">LED全点滅</button>
+              <Input type="text" name="span" value="1" size="1">秒ごとに
+              <Input type="text" name="count" value="3" size="1">回点滅
+          </form>
+          <br>
+          <form method="post" action="{% url 'accounts:ledPattern' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">音声＋LED点滅</button>
+          </form>
+          <br>
+          <form method="post" action="{% url 'accounts:roundMotor' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">サーボモーター回転</button>
+              <Input type="text" name="count" value="3" size="1">回回転 
+          </form>
+        </div>        
+      </div>
+      <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">This is a text of item#3.</div>
     </div>
+  </div>
 
-    
-
+      <!-- <div class="bubble bubble-left1">
+              頭部<br>
+              <form method="post" action="{% url 'accounts:ledPattern' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="button-size btn btn-primary">頭</button>
+              </form>
+              <br>
+              <form method="post" action="{% url 'accounts:ledPattern' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="button-size btn btn-primary">目</button>
+              </form>
+          </div>
+          <div class="bubble bubble-left3">
+              <form method="post" action="{% url 'accounts:ledPattern' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">肩</button>
+              </form>
+              <br>
+              <form method="post" action="{% url 'accounts:ledPattern' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="button-size btn btn-primary">胸</button>
+              </form>
+          </div> -->
+            <!-- <div class="bubble-right">
+                      <form method="post" action="{% url 'accounts:roundMotor' %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-primary">首</button>
+                          <input type="text" name="count" value="3" size="1">回転
+                      </form>
+                  </div> -->
+              <!-- </div>
+          </div> -->
+  <!-- </div> -->
+  <br>
+  <form method="post" action="{% url 'accounts:logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Logout</button>
+  </form>
+  </div>
 {% else %}
-    <a href="{% url 'accounts:login' %}" class="btn btn-secondary">Login</a>
+  <a href="{% url 'accounts:login' %}" class="btn btn-secondary">Login</a>
 {% endif %}
 {% endblock %}
