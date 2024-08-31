@@ -7,7 +7,7 @@ print('Set the GPIO mode')
 GPIO.setmode(GPIO.BCM)
 
 # Set the GPIO pin for the servo motor
-servo_pin = 18
+servo_pin = 17
 
 # Set the frequency and duty cycle for the servo motor
 frequency = 50
@@ -42,22 +42,52 @@ def roundMotor(count):
     print('Start the PWM')
     pwm.start(duty_cycle)
     
-    for i in range(1, count):
+    # for i in range(1, count):
+    #     # Change the duty cycle to rotate the servo motor
+    #     print('move Neutral position')
+    #     pwm.ChangeDutyCycle(7.5)  # Neutral position
+    #     time.sleep(5)
+
+    #     print('move Clockwise rotation')
+    #     pwm.ChangeDutyCycle(12.5)  # Clockwise rotation
+    #     time.sleep(5)
+
+    #     print('move Counter-clockwise rotation')
+    #     pwm.ChangeDutyCycle(2.5)  # Counter-clockwise rotation
+    #     time.sleep(5)
+
+    # pwm.stop()
+
+    for i in range(1, 12):
         # Change the duty cycle to rotate the servo motor
         print('move Neutral position')
-        pwm.ChangeDutyCycle(7.5)  # Neutral position
-        time.sleep(3)
+        cycle = i + 0.5
+        pwm.ChangeDutyCycle(cycle)
+        # time.sleep(0.5)  # Short delay to stabilize
+        # pwm.ChangeDutyCycle(0)  # Stop the PWM signal
+        # time.sleep(2)  # Wait for the rest of the time
 
-        print('move Clockwise rotation')
-        pwm.ChangeDutyCycle(12.5)  # Clockwise rotation
-        time.sleep(3)
+    # for i in range(1, count):
+    #     # Change the duty cycle to rotate the servo motor
+    #     print('move Neutral position')
+    #     pwm.ChangeDutyCycle(7.5)  # Neutral position
+    #     time.sleep(0.5)  # Short delay to stabilize
+    #     pwm.ChangeDutyCycle(0)  # Stop the PWM signal
+    #     time.sleep(2)  # Wait for the rest of the time
 
-        print('move Counter-clockwise rotation')
-        pwm.ChangeDutyCycle(2.5)  # Counter-clockwise rotation
-        time.sleep(3)
+    #     print('move Clockwise rotation')
+    #     pwm.ChangeDutyCycle(9.5)  # Clockwise rotation
+    #     time.sleep(0.5)  # Short delay to stabilize
+    #     pwm.ChangeDutyCycle(0)  # Stop the PWM signal
+    #     time.sleep(2)  # Wait for the rest of the time
 
-    pwm.stop()
+    #     print('move Counter-clockwise rotation')
+    #     pwm.ChangeDutyCycle(5.5)  # Counter-clockwise rotation
+    #     time.sleep(0.5)  # Short delay to stabilize
+    #     pwm.ChangeDutyCycle(0)  # Stop the PWM signal
+    #     time.sleep(2)  # Wait for the rest of the time
 
+    pwm.stop(duty_cycle)
 
         # pwm.start(0.0)
         # pwm.ChangeDutyCycle(2.5)  # Neutral position

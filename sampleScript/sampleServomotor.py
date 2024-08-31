@@ -7,7 +7,7 @@ print('Set the GPIO mode')
 GPIO.setmode(GPIO.BCM)
 
 # Set the GPIO pin for the servo motor
-servo_pin = 5
+servo_pin = 17
 
 # Set the frequency for PWM
 frequency = 50
@@ -30,26 +30,43 @@ def main():
 
 
         while True:
+            # pwm.ChangeDutyCycle(7.5)  # Neutral position
+            # print('Slowly move loop')
+            # for angle in range(0, 180, 1):
+            #     duty_cycle = angle / 18 + 2.5
+            #     pwm.ChangeDutyCycle(duty_cycle)
+            #     time.sleep(0.3) 
+            # time.sleep(5)
+
+            # for angle in range(1, 3, 1):
+            #     pwm.ChangeDutyCycle(angle * 2.5)  # Neutral position
+            #     time.sleep(1)
+
+            # for angle in range(3, 1, -1):
+            #     pwm.ChangeDutyCycle(angle * 2.5)  # Neutral position
+            #     time.sleep(1)
+
+
+
+            # # Change the duty cycle to rotate the servo motor
+            print('move 7.5')
             pwm.ChangeDutyCycle(7.5)  # Neutral position
-            print('Slowly move loop')
-            for angle in range(0, 180, 1):
-                duty_cycle = angle / 18 + 2.5
-                pwm.ChangeDutyCycle(duty_cycle)
-                time.sleep(0.3) 
-            time.sleep(5)
-
-            # Change the duty cycle to rotate the servo motor
-            #print('move Neutral position')
-            #pwm.ChangeDutyCycle(7.5)  # Neutral position
-            #time.sleep(1)
-
-            #print('move Clockwise rotation')
-            #pwm.ChangeDutyCycle(12.5)  # Clockwise rotation
-            #time.sleep(1)
-
-            #print('move Counter-clockwise rotation')
-            #pwm.ChangeDutyCycle(2.5)  # Counter-clockwise rotation
-            #time.sleep(1)
+            time.sleep(2)
+            print('move 10.5')
+            pwm.ChangeDutyCycle(10.5)  # Clockwise rotation
+            time.sleep(2)
+            # # print('move 7.5')
+            # pwm.ChangeDutyCycle(7.5)  # Neutral position
+            # time.sleep(2)
+            print('move 5')
+            pwm.ChangeDutyCycle(5)  # Neutral position
+            time.sleep(2)
+            # # print('move 2.5')
+            # pwm.ChangeDutyCycle(2.5)  # Counter-clockwise rotation
+            # time.sleep(2)
+            # # print('move 5')
+            # pwm.ChangeDutyCycle(5)  # Neutral position
+            # time.sleep(1)
 
     except KeyboardInterrupt:
         # Stop the PWM and cleanup the GPIO

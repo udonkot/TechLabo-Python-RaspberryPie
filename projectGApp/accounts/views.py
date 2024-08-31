@@ -4,13 +4,16 @@ from urllib import request
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
 from django.urls import reverse_lazy
 from .forms import LoginForm
-from accounts.utils.ledUtils import gpioSetup, lightsOn, lightsOff, allLighting
+from accounts.utils.ledUtils import gpioSetup, lightsOn, lightsOff, allLighting, randomLighting
 from accounts.utils.motorUtils import roundMotor
+from accounts.utils.soubdUtils import play_music
 
 import RPi.GPIO as GPIO
+import json
 
 import sys
 sys.path.append('/home/rpiuser/github_repo/TechLabo-Python-RaspberryPie/sampleScript')
@@ -47,6 +50,15 @@ def LedAllLightOn(request):
     # JsonResponse({'result': 'ok'})
     return render(request, 'index.html')
 
+# 全点灯（非同期）
+def LedAllLightOnAjax(request):
+
+    if request.method == 'POST':
+        lightsOn(LIGHT_GROUP_ALL)
+        return JsonResponse({'status': 'success', 'message': 'LED全点滅が実行されました'})
+    return JsonResponse({'status': 'error', 'message': '無効なリクエスト'})    
+
+
 # 全消灯
 def LedAllLightOff(request):
     lightsOff(LIGHT_GROUP_ALL)
@@ -78,3 +90,43 @@ def RoundMotor(request):
     count = int(request.POST.get('count', 3))
     roundMotor(count)
     return render(request, 'index.html')
+
+def RandomLighting(request):
+    print('start randomLighting')
+    span = float(request.POST.get('span', 3))
+    count =  int(request.POST.get('count', 3))
+    randomLighting(LIGHT_GROUP_ALL, span, count)
+    # asyncio.run(randomLighting(LIGHT_GROUP_ALL, 1, 3))
+    print('end randomLighting')
+    return render(request, 'index.html')
+
+
+# 一定時間点滅
+def PlaySound(request):
+    print('start Sound')
+    asyncio.run(play_music('/home/rpiuser/opt/sounds/kensirou.mp3'))
+    print('end LedPattern')
+    return render(request, 'index.html')
+
+@csrf_exempt
+def update_switch_state(request):
+    print('update_switch_state')
+    print(request.POST)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        # switch_id = data.get('switchId')
+        state = data.get('state')
+        gpio_no = int(data.get('gpioNo'))
+        
+
+        # state = request.POST.get('state')
+        # gpioNo = request.POST.get('gpioNo')
+        print(state)
+        print(gpio_no)
+        if state:
+            lightsOn([gpio_no])
+        else:
+            lightsOff([gpio_no])
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False})

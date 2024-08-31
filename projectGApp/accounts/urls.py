@@ -13,5 +13,9 @@ urlpatterns = [
     path('ledAllBlink/', views.LedAllBlink, name='ledAllBlink'),
     path('roundMotor/', views.RoundMotor, name='roundMotor'),
     path('ledPattern/', views.LedPattern, name='ledPattern'),
-    
+    path('randomLighting/', views.RandomLighting, name='randomLighting'),   
+    path('playSound/', views.PlaySound, name='playSound'),
+    path('update-switch-state/', views.update_switch_state, name='update-switch-state/'),
+    path('LedAllLightOnAjax/',  views.LedAllLightOnAjax,  name='LedAllLightOnAjax'),
+
 ]
