@@ -1,4 +1,6 @@
-console.log('start script');
+/**
+ * スイッチの状態を更新する
+ */
 document.addEventListener('DOMContentLoaded', function() {
     const switches = document.querySelectorAll('.custom-control-input');
 

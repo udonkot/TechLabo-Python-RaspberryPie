@@ -172,3 +172,34 @@
     margin-right: px; /* 必要に応じて調整 */
     white-space: nowrap; /* テキストを折り返さない */
 }
+
+.logout-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f8f9fa; /* 背景色を設定 */
+    border-top: 1px solid #e7e7e7; /* 上部に境界線を追加 */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+.switch-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* 各スイッチ間に余白を追加 */
+}
+
+.switch-container .custom-control-label {
+    margin-right: 10px; /* ラベルと状態表示の間に余白を追加 */
+}
+
+.switch-container div {
+    flex-grow: 1; /* divを左寄せにする */
+}

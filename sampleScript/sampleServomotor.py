@@ -7,7 +7,7 @@ print('Set the GPIO mode')
 GPIO.setmode(GPIO.BCM)
 
 # Set the GPIO pin for the servo motor
-servo_pin = 17
+servo_pin = 18
 
 # Set the frequency for PWM
 frequency = 50

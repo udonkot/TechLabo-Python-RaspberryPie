@@ -4,6 +4,13 @@
 {% block title %}
 {% if user.is_authenticated %}
     <div class="h2">RaspberryPie 操作画面</div>
+    <div class="logout-container">
+      <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Logout</button>
+      </form>
+    </div>
+  
 {% else %}
     <div class="h2">Main</div>
 {% endif %}
@@ -15,6 +22,7 @@
 {% block content %}
 {% if user.is_authenticated %}
   <div id="contents">
+    <!-- タブ一覧 -->
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">Item#1</a>
@@ -28,34 +36,40 @@
     </ul>
 
     <div class="tab-content">
+      <!-- Item#1 -->
       <div class="tab-pane fade show active" id="item1" role="tabpanel" aria-labelledby="item1-tab">
         <div id="switches">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_head" data-target="light-head" data-gpio="26">
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_head" data-target="light-head" data-gpio="21">
             <label class="custom-control-label" for="customSwitch_head">頭</label>
             <div id="light-head" data-label="頭">頭の状態: ライトオフ</div>
           </div>
-
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_eye" data-target="light-eyes">
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_eye" data-target="light-eyes" data-gpio="20">
             <label class="custom-control-label" for="customSwitch_eye">目</label>
             <div id="light-eyes" data-label="目">目の状態: ライトオフ</div>
           </div>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_shoulder" data-target="light-shoulder">
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_shoulder" data-target="light-shoulder" data-gpio="26,19,16,25">
             <label class="custom-control-label" for="customSwitch_shoulder">肩</label>
             <div id="light-shoulder" data-label="肩">肩の状態: ライトオフ</div>
           </div>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest">
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest" data-gpio="6">
             <label class="custom-control-label" for="customSwitch_body">胸</label>
             <div id="light-chest" data-label="胸">胸の状態: ライトオフ</div>
+          </div>
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest" data-gpio="13">
+            <label class="custom-control-label" for="customSwitch_body">バーニア</label>
+            <div id="light-chest" data-label="バーニア">バーニアの状態: ライトオフ</div>
           </div>
         </div>
         <div class="image-container">
           <img src="{% static 'images/MEGA_G.jpg' %}" alt="Sample Image" class="img-fluid">
         </div>
       </div>
+      <!-- Item#2 -->
       <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
         <div id ="led">
           <form method="post" action="{% url 'accounts:ledInit' %}">
@@ -92,15 +106,43 @@
           <form method="post" action="{% url 'accounts:roundMotor' %}">
               {% csrf_token %}
               <button type="submit" class="btn btn-primary">サーボモーター回転</button>
-              <Input type="text" name="count" value="3" size="1">回回転 
+              <Input type="text" name="count" value="3" size="1">回転 
           </form>
-        </div>        
-      </div>
-      <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
+          <form method="post" action="{% url 'accounts:moveMotor' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">サーボモーター回転</button>
+            <Input type="text" name="val" value="90" size="1">度指定 
+          </form>
+          <form method="post" action="{% url 'accounts:resetMotor' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">サーボモーターリセット</button>
+          </form>
+        </div>
+        <div id="sound">
           <form method="post" action="{% url 'accounts:playSound' %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-primary">sound1 play</button>
+            {% csrf_token %}
+            <select name="sound">
+              <option value="kensirou.mp3">北斗の拳</option>
+              <option value="MobileSuitGundamOST1Track06-Gundam_on_the_Earth.mp4">Gundam on the Earth</option>
+              <option value="Mobile Suit Gundam OST 1 Track 07 - Gallant Char.mp4">Gallant Char</option>
+              <option value="【機動戦士ガンダム】　セリフ＆効果音集！　字幕付き.mp4">セリフ＆効果音集</option>
+              <option value="ガンダム　タイトル垂れ流し.mp4">ガンダム　タイトル垂れ流し</option>
+              <option value="モノアイ点灯音.mp4">モノアイ点灯音</option>
+              <option value="機動戦士ガンダム（ファースト）作業用ＢＧＭ １２ GUNDUM（ FIRST）（1979年）.mp4">GUNDUM（ FIRST）（1979年）</option>
+              <option value="機動戦士ガンダム（ファースト）作業用ＢＧＭ～ＴＶ版セリフ付１２.mp4">ＴＶ版セリフ付１２</option>
+              <option value="機動戦士ガンダム（ファースト）作業用ＢＧＭ～ＴＶ版セリフ付２２.mp4">ＴＶ版セリフ付２２</option>
+            </select>
+            <button type="submit" class="btn btn-primary">sound1 play</button>
           </form>
+          <form method="post" action="{% url 'accounts:stopSound' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Stop</button>
+          </form>
+        </div>
+      </div>
+      <!-- Item#3 -->
+      <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
+        item3
       </div>
     </div>
   </div>
@@ -138,11 +180,6 @@
               <!-- </div>
           </div> -->
   <!-- </div> -->
-  <br>
-  <form method="post" action="{% url 'accounts:logout' %}">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary">Logout</button>
-  </form>
   </div>
 {% else %}
   <a href="{% url 'accounts:login' %}" class="btn btn-secondary">Login</a>

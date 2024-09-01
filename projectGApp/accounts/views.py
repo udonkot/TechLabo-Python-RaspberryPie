@@ -9,8 +9,8 @@ from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as 
 from django.urls import reverse_lazy
 from .forms import LoginForm
 from accounts.utils.ledUtils import gpioSetup, lightsOn, lightsOff, allLighting, randomLighting
-from accounts.utils.motorUtils import roundMotor
-from accounts.utils.soubdUtils import play_music
+from accounts.utils.motorUtils import roundMotor, moveMotor, resetMotor
+from accounts.utils.soundUtils import play_music, stop_music
 
 import RPi.GPIO as GPIO
 import json
@@ -27,6 +27,7 @@ LIGHT_GROUP_SHOULDER_RIGHT_UP = [26]
 LIGHT_GROUP_SHOULDER_LEFT_UP = [19]
 LIGHT_GROUP_SHOULDER_RIGUT_DOWN = [16]
 LIGHT_GROUP_SHOULDER_RIGUT_DOWN = [25]
+LIGHT_GROUP_SHOULDERS = [26, 19, 16, 25]
 LIGHT_GROUP_BODY_FRONT = [13]
 LIGHT_GROUP_BODY_BACK = [6]
 
@@ -91,6 +92,17 @@ def RoundMotor(request):
     roundMotor(count)
     return render(request, 'index.html')
 
+def MoveMotor(request):
+    val = int(request.POST.get('val', 7.5))
+    moveMotor(val)
+    return render(request, 'index.html')
+
+def ResetMotor(request):
+    # pwm = gpioSetup([18])
+    resetMotor()
+    return render(request, 'index.html')
+
+
 def RandomLighting(request):
     print('start randomLighting')
     span = float(request.POST.get('span', 3))
@@ -101,24 +113,36 @@ def RandomLighting(request):
     return render(request, 'index.html')
 
 
-# 一定時間点滅
+# 
 def PlaySound(request):
     print('start Sound')
-    asyncio.run(play_music('/home/rpiuser/opt/sounds/kensirou.mp3'))
+    fileName =  request.POST.get('sound', 'kensirou.mp3')
+    filePath = '/home/rpiuser/opt/sounds/projectG/' + fileName
+    print(filePath)
+
+    asyncio.run(play_music(filePath))
     print('end LedPattern')
     return render(request, 'index.html')
 
+def StopSound(request):
+    asyncio.run(stop_music())
+    return render(request, 'index.html')
+
+# スイッチ操作以下は、POSTでのリクエストを受け付けるための関数
 @csrf_exempt
 def update_switch_state(request):
-    print('update_switch_state')
+    # print('update_switch_state')
     print(request.POST)
     if request.method == 'POST':
         data = json.loads(request.body)
         # switch_id = data.get('switchId')
         state = data.get('state')
-        gpio_no = int(data.get('gpioNo'))
-        
+        # gpio_no = int(data.get('gpioNo'))
+        gpio_no = data.get('gpioNo')
 
+        # ,で分割してリストに変換
+        gpio_no = gpio_no.split(',')
+       
         # state = request.POST.get('state')
         # gpioNo = request.POST.get('gpioNo')
         print(state)
