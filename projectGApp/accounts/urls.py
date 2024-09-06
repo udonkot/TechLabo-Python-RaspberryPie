@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('ledInit/', views.LedInit, name='ledInit'),
     path('ledAllLightOn/',  views.LedAllLightOn,  name='ledAllLightOn'),
+    path('LedAllLightOnAjax/',  views.LedAllLightOnAjax,  name='ledAllLightOnAjax'),
     path('ledAllLightOff/', views.LedAllLightOff, name='ledAllLightOff'),
     path('ledAllBlink/', views.LedAllBlink, name='ledAllBlink'),
     path('roundMotor/', views.RoundMotor, name='roundMotor'),
@@ -19,6 +20,6 @@ urlpatterns = [
     path('playSound/', views.PlaySound, name='playSound'),
     path('stopSound/', views.StopSound, name='stopSound'),
     path('update-switch-state/', views.update_switch_state, name='update-switch-state/'),
-    path('LedAllLightOnAjax/',  views.LedAllLightOnAjax,  name='LedAllLightOnAjax'),
+    path('playPattern/', views.PlayPattern, name='playPattern'),
 
 ]

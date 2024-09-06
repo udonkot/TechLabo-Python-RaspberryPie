@@ -45,6 +45,11 @@
             <div id="light-head" data-label="頭">頭の状態: ライトオフ</div>
           </div>
           <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_eye" data-target="light-eyes" data-gpio="12">
+            <label class="custom-control-label" for="customSwitch_eye">バルカン</label>
+            <div id="light-eyes" data-label="バルカン">バルカンの状態: ライトオフ</div>
+          </div>
+          <div class="custom-control custom-switch switch-container">
             <input type="checkbox" class="custom-control-input" id="customSwitch_eye" data-target="light-eyes" data-gpio="20">
             <label class="custom-control-label" for="customSwitch_eye">目</label>
             <div id="light-eyes" data-label="目">目の状態: ライトオフ</div>
@@ -60,9 +65,9 @@
             <div id="light-chest" data-label="胸">胸の状態: ライトオフ</div>
           </div>
           <div class="custom-control custom-switch switch-container">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest" data-gpio="13">
-            <label class="custom-control-label" for="customSwitch_body">バーニア</label>
-            <div id="light-chest" data-label="バーニア">バーニアの状態: ライトオフ</div>
+            <input type="checkbox" class="custom-control-input" id="customSwitch_vernier" data-target="light-vernier" data-gpio="13">
+            <label class="custom-control-label" for="customSwitch_vernier">バーニア</label>
+            <div id="light-vernier" data-label="バーニア">バーニアの状態: ライトオフ</div>
           </div>
         </div>
         <div class="image-container">
@@ -72,55 +77,70 @@
       <!-- Item#2 -->
       <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
         <div id ="led">
-          <form method="post" action="{% url 'accounts:ledInit' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledInit' %}">
               {% csrf_token %}
+              <input type="hidden" name="url" value='ledInit/'>
+
               <button type="submit" class="btn btn-primary">LED初期化</button>
           </form>
           <br>
-          <form method="post" action="{% url 'accounts:ledAllLightOn' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledAllLightOn' %}">
             {% csrf_token %}
+            <input type="hidden" name="url" value='ledAllLightOn/'>
+
             <button type="submit" class="btn btn-primary">LED全点灯</button>
           </form>
-          <form id='led-all-blink-form' method="post" action="{% url 'accounts:LedAllLightOnAjax' %}">
+          <form id='led-all-blink-form-hoge' class='ajax-form' method="post">
               {% csrf_token %}
+              <input type="hidden" name="url" value='ledAllLightOn/'>
+              <!-- <input type="hidden" name="url" value='LedAllLightOnAjax/'> -->
+          
               <button type="submit" class="btn btn-primary">LED全点灯(非同期)</button>
           </form>
           <br>
-          <form method="post" action="{% url 'accounts:ledAllLightOff' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledAllLightOff' %}">
               {% csrf_token %}
+              <input type="hidden" name="url" value='ledAllLightOff/'>
               <button type="submit" class="btn btn-primary">LED全消灯</button>
           </form>
           <br>
-          <form method="post" action="{% url 'accounts:ledAllBlink' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledAllBlink' %}">
               {% csrf_token %}
+              <input type="hidden" name="url" value='ledAllBlink/'>
               <button type="submit" class="btn btn-primary">LED全点滅</button>
-              <Input type="text" name="span" value="1" size="1">秒ごとに
-              <Input type="text" name="count" value="3" size="1">回点滅
+              <Input type="text" name="val01" value="1" size="1">秒ごとに
+              <Input type="text" name="val02" value="3" size="1">回点滅
           </form>
           <br>
-          <form method="post" action="{% url 'accounts:ledPattern' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledPattern' %}">
               {% csrf_token %}
+              <input type="hidden" name="url" value='ledPattern/'>
               <button type="submit" class="btn btn-primary">音声＋LED点滅</button>
           </form>
           <br>
-          <form method="post" action="{% url 'accounts:roundMotor' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:roundMotor' %}">
               {% csrf_token %}
+              <input type="hidden" name="url" value='roundMotor/'>
               <button type="submit" class="btn btn-primary">サーボモーター回転</button>
               <Input type="text" name="count" value="3" size="1">回転 
           </form>
-          <form method="post" action="{% url 'accounts:moveMotor' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:moveMotor' %}">
             {% csrf_token %}
+            <input type="hidden" name="url" value='moveMotor/'>
             <button type="submit" class="btn btn-primary">サーボモーター回転</button>
-            <Input type="text" name="val" value="90" size="1">度指定 
+            <Input type="text" name="val01" value="90" size="1">度指定 
           </form>
-          <form method="post" action="{% url 'accounts:resetMotor' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:resetMotor' %}">
             {% csrf_token %}
+            <input type="hidden" name="url" value='resetMotor/'>
             <button type="submit" class="btn btn-primary">サーボモーターリセット</button>
           </form>
         </div>
         <div id="sound">
-          <form method="post" action="{% url 'accounts:playSound' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playSound' %}">
             {% csrf_token %}
+            <input type="hidden" name="url" value='playSound/'>
+
             <select name="sound">
               <option value="kensirou.mp3">北斗の拳</option>
               <option value="MobileSuitGundamOST1Track06-Gundam_on_the_Earth.mp4">Gundam on the Earth</option>
@@ -134,15 +154,48 @@
             </select>
             <button type="submit" class="btn btn-primary">sound1 play</button>
           </form>
-          <form method="post" action="{% url 'accounts:stopSound' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:stopSound' %}">
             {% csrf_token %}
+            <input type="hidden" name="url" value='stopSound/'>
+
             <button type="submit" class="btn btn-primary">Stop</button>
           </form>
         </div>
       </div>
       <!-- Item#3 -->
       <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
-        item3
+        <div id="pattern999">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='999'>
+            <button type="submit" class="btn btn-primary">サンプル</button>
+          </form>
+        </div>
+        <div id="pattern101">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='101'>
+            <button type="submit" class="btn btn-primary">パターン1</button>
+          </form>
+        </div>
+        <div id="pattern102">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='102'>
+            <button type="submit" class="btn btn-primary">パターン2</button>
+          </form>
+        </div>
+        <div id="pattern103">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='103'>
+            <button type="submit" class="btn btn-primary">パターン3</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>

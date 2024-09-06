@@ -1,0 +1,237 @@
+{
+    "patternList":[
+        {
+            "no": 999,
+            "description" : "サンプル",
+            "soundFile": "kensirou.mp3",
+            "soundStartSec": 8,
+            "ligtingPatternList":[
+                {
+                    "sleepSec": 1,
+                    "patternNo": 3,
+                    "gpio": [20,21,6,13,19,26,16,25],
+                    "span": 0.2,
+                    "count": 5
+                },
+                {
+                    "sleepSec": 5,
+                    "patternNo": 1,
+                    "gpio": [20,21,6,13,19,26,16,25]
+                },
+                {
+                    "sleepSec": 5,
+                    "patternNo": 2,
+                    "gpio": [20,21,6,13,19,26,16,25]
+                }
+            ]
+        },
+        {
+            "no": 101,
+            "description": "パターン１",
+            "soundFile": "kensirou.mp3",
+            "soundStartSec": 3,
+            "ligtingPatternList":[
+                {
+                    "description": "足点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [23]
+                },
+                {
+                    "description": "腰点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [24]
+                },
+                {
+                    "description": "胸点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [13,6]
+                },
+                {
+                    "description": "左肩点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [19,25]
+                },
+                {
+                    "description": "右肩点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [26,16]
+                },
+                {
+                    "description": "バルカン点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [12]
+                },
+                {
+                    "description": "頭点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [21]
+                },
+                {
+                    "description": "目点灯",
+                    "sleepSec": 4,
+                    "patternNo": 1,
+                    "gpio": [20]
+                },
+                {
+                    "description": "全点滅",
+                    "sleepSec": 4,
+                    "patternNo": 3,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24],
+                    "span": 0.2,
+                    "count": 10
+                }
+           ]
+        },
+        {
+            "no": 102,
+            "description": "パターン2",
+            "soundFile": "kensirou.mp3",
+            "soundStartSec": 3,
+            "ligtingPatternList":[
+                {
+                    "description": "全点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24]
+                },
+                {
+                    "description": "サーボ回転",
+                    "sleepSec": 2,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 45
+                },
+                {
+                    "description": "バルカン点滅",
+                    "sleepSec": 2,
+                    "patternNo": 3,
+                    "gpio": [12],
+                    "span": 0.2,
+                    "count": 10
+                },
+                {
+                    "description": "サーボ回転",
+                    "sleepSec": 2,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 90
+                },
+                {
+                    "description": "バルカン点滅",
+                    "sleepSec": 2,
+                    "patternNo": 3,
+                    "gpio": [12],
+                    "span": 0.2,
+                    "count": 10
+                }
+           ]
+        },
+        {
+            "no": 103,
+            "description": "パターン3",
+            "soundFile": "kensirou.mp3",
+            "soundStartSec": 3,
+            "ligtingPatternList":[
+                {
+                    "description": "ランダム点灯",
+                    "sleepSec": 2,
+                    "patternNo": 5,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24],
+                    "span": 0.2,
+                    "count": 10
+                },
+                {
+                    "description": "バルカン点滅",
+                    "sleepSec": 2,
+                    "patternNo": 3,
+                    "gpio": [12],
+                    "span": 0.2,
+                    "count": 10
+                },
+                {
+                    "description": "サーボ回転",
+                    "sleepSec": 2,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 45
+                },
+                {
+                    "description": "全点滅",
+                    "sleepSec": 4,
+                    "patternNo": 3,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24],
+                    "span": 1,
+                    "count": 5
+                },
+                {
+                    "description": "全点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24]
+                },
+                {
+                    "description": "サーボ回転",
+                    "sleepSec": 2,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 90
+                },
+                {
+                    "description": "足消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [23]
+                },
+                {
+                    "description": "腰消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [24]
+                },
+                {
+                    "description": "胸消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [13,6]
+                },
+                {
+                    "description": "左肩消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [19,25]
+                },
+                {
+                    "description": "右肩消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [26,16]
+                },
+                {
+                    "description": "バルカン消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [12]
+                },
+                {
+                    "description": "頭消灯",
+                    "sleepSec": 2,
+                    "patternNo": 2,
+                    "gpio": [21]
+                },
+                {
+                    "description": "目消灯",
+                    "sleepSec": 4,
+                    "patternNo": 2,
+                    "gpio": [20]
+                }                
+           ]
+        }        
+    ]
+}
