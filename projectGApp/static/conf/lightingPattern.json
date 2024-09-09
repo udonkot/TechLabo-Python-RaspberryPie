@@ -232,6 +232,87 @@
                     "gpio": [20]
                 }                
            ]
-        }        
+        },
+         {
+            "no": 103,
+            "description": "野中さんパターン1",
+            "soundFile": "gundam_music1.mp3",
+            "soundStartSec": 3,
+            "ligtingPatternList":[
+                {
+                    "description": "メインカメラ点灯",
+                    "sleepSec": 0,
+                    "patternNo": 1,
+                    "gpio": [20,21],
+                },
+                {
+                    "description": "胸点灯",
+                    "sleepSec": 5,
+                    "patternNo": 1,
+                    "gpio": [13]
+                },
+                {
+                    "description": "何か点灯(肩)",
+                    "sleepSec": 4,
+                    "patternNo": 1,
+                    "gpio": [19,26,16,25]
+                },
+                {
+                    "description": "全て点灯",
+                    "sleepSec": 9,
+                    "patternNo": 1,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24]
+                },
+                {
+                    "description": "サーボ大きく回転",
+                    "sleepSec": 2,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 120
+                },
+                {
+                    "description": "サーボ小さく回転",
+                    "sleepSec": 4,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 90
+                },
+                {
+                    "description": "サーボ大きく回転",
+                    "sleepSec": 7,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 20
+                },
+                {
+                    "description": "何か点灯(腰、足)",
+                    "sleepSec": 4,
+                    "patternNo": 1,
+                    "gpio": [23,24]
+                },
+                {
+                    "description": "ビームライフル(バルカン以外点滅)",
+                    "sleepSec": 8,
+                    "patternNo": 3,
+                    "gpio": [20,21,6,13,19,26,16,25,23,24],
+                    "span": 0.2,
+                    "count": 10
+                },
+                {
+                    "description": "バルカン点滅",
+                    "sleepSec": 8,
+                    "patternNo": 3,
+                    "gpio": [12],
+                    "span": 0.1,
+                    "count": 10
+                },
+                {
+                    "description": "バーニア点灯",
+                    "sleepSec": 7,
+                    "patternNo": 2,
+                    "gpio": [6]
+                }
+           ]
+        }
     ]
 }
