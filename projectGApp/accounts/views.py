@@ -20,7 +20,7 @@ import sys
 sys.path.append('/home/rpiuser/github_repo/TechLabo-Python-RaspberryPie/sampleScript')
 from samplePattern import main as sampleMain
 
-LIGHT_GROUP_ALL = [20,21,6,13,19,26,16,25,12,23,24]
+LIGHT_GROUP_ALL = [20,21,6,13,19,26,16,25,12,23,24,17,27,22]
 #LIGHT_GROUP_ALL = [16,20,21]
 LIGHT_GROUP_FACES = [21,20,12]
 LIGHT_GROUP_FACE_HEAD = [21]
@@ -31,10 +31,12 @@ LIGHT_GROUP_SHOULDER_RIGHT_UP = [26]
 LIGHT_GROUP_SHOULDER_LEFT_UP = [19]
 LIGHT_GROUP_SHOULDER_RIGHT_DOWN = [16]
 LIGHT_GROUP_SHOULDER_LEFT_DOWN = [25]
-LIGHT_GROUP_BODY_FRONT = [13]
-LIGHT_GROUP_BODY_BACK = [6]
-LIGHT_GROUP_BODY_WAIST = [24]
-LIGHT_GROUP_LEG_THIGHS = [23]
+LIGHT_GROUP_BODY_FRONT = [6,24]
+LIGHT_GROUP_BODY_BACK = [13]
+LIGHT_GROUP_LEGS = [23,17,27,22]
+LIGHT_GROUP_LEG_LEFT = [23,17]
+LIGHT_GROUP_LEG_RIGHT = [27,22]
+LIGHT_SOUND_PLAY = [4]
 
 # 初期化
 gpioSetup(LIGHT_GROUP_ALL)
@@ -90,6 +92,23 @@ def LedInit(request):
 
     gpioSetup(LIGHT_GROUP_ALL)
     # JsonResponse({'result': 'ok'})
+    # return render(request, 'index.html')
+    return JsonResponse({'status': 'success', 'message': funcName})
+
+def LedBlink(request):
+    funcName = 'LedBlink'
+
+    data = json.loads(request.body)
+    gpioNo = int(data.get('val01', 12))
+    span = float(data.get('val02', 3))
+    count = int(data.get('val03', 10))
+    # gpioNo = int(request.POST.get('gpioNo', 20))
+    # span = float(request.POST.get('span', 3))
+    # count =  int(request.POST.get('count', 3))
+    # print(str(gpioNo) + ' / ' + str(span) + ' / ' + str(count))
+
+    allLighting([gpioNo], span, count)
+
     # return render(request, 'index.html')
     return JsonResponse({'status': 'success', 'message': funcName})
 
@@ -223,6 +242,12 @@ async def PlayPattern(request):
         data = json.load(f)
         print('[start PlayPattern]')
 
+        # 一度すべて消灯
+        lightsOff(LIGHT_GROUP_ALL)
+
+        # LEDピン点灯
+        lightsOn([LIGHT_SOUND_PLAY])
+
         #find patternNo
         for pattern in data['patternList']:
             if int(pattern['no']) == int(patternNo):
@@ -278,6 +303,9 @@ async def PlayPattern(request):
                         count = int(ligthingPattern['count'])
                         randomLighting([ligthingPattern['gpio']], span, count)
                 break
+
+        # LEDピン消灯
+        lightsOff([LIGHT_SOUND_PLAY])
 
         print('[end PlayPattern]')
 

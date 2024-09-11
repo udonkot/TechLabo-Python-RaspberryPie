@@ -12,6 +12,7 @@ urlpatterns = [
     path('LedAllLightOnAjax/',  views.LedAllLightOnAjax,  name='ledAllLightOnAjax'),
     path('ledAllLightOff/', views.LedAllLightOff, name='ledAllLightOff'),
     path('ledAllBlink/', views.LedAllBlink, name='ledAllBlink'),
+    path('ledBlink/', views.LedBlink, name='ledBlink'),
     path('roundMotor/', views.RoundMotor, name='roundMotor'),
     path('moveMotor/', views.MoveMotor, name='moveMotor'),
     path('resetMotor/', views.ResetMotor, name='resetMotor'),

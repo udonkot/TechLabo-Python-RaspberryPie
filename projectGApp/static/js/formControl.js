@@ -11,6 +11,7 @@ $(document).ready(function() {
 
         const val01 = formData.get('val01');
         const val02 = formData.get('val02');
+        const val03 = formData.get('val03');
 
         // CSRF トークンを取得
         const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -24,7 +25,8 @@ $(document).ready(function() {
             },
             body: JSON.stringify({
                 val01: val01,
-                val02: val02
+                val02: val02,
+                val03: val03
             })
         })
         .then(response => response.json())

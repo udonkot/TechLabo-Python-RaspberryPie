@@ -45,8 +45,8 @@
             <div id="light-head" data-label="頭">頭の状態: ライトオフ</div>
           </div>
           <div class="custom-control custom-switch switch-container">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_eye" data-target="light-eyes" data-gpio="12">
-            <label class="custom-control-label" for="customSwitch_eye">バルカン</label>
+            <input type="checkbox" class="custom-control-input" id="customSwitch_balucan" data-target="light-eyes" data-gpio="12">
+            <label class="custom-control-label" for="customSwitch_balucan">バルカン</label>
             <div id="light-eyes" data-label="バルカン">バルカンの状態: ライトオフ</div>
           </div>
           <div class="custom-control custom-switch switch-container">
@@ -60,7 +60,7 @@
             <div id="light-shoulder" data-label="肩">肩の状態: ライトオフ</div>
           </div>
           <div class="custom-control custom-switch switch-container">
-            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest" data-gpio="6">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_body" data-target="light-chest" data-gpio="6,24">
             <label class="custom-control-label" for="customSwitch_body">胸</label>
             <div id="light-chest" data-label="胸">胸の状態: ライトオフ</div>
           </div>
@@ -68,6 +68,16 @@
             <input type="checkbox" class="custom-control-input" id="customSwitch_vernier" data-target="light-vernier" data-gpio="13">
             <label class="custom-control-label" for="customSwitch_vernier">バーニア</label>
             <div id="light-vernier" data-label="バーニア">バーニアの状態: ライトオフ</div>
+          </div>
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_legleft" data-target="light-legleft" data-gpio="23,17">
+            <label class="custom-control-label" for="customSwitch_legleft">左足</label>
+            <div id="light-legleft" data-label="左足">左足の状態: ライトオフ</div>
+          </div>
+          <div class="custom-control custom-switch switch-container">
+            <input type="checkbox" class="custom-control-input" id="customSwitch_legright" data-target="light-legright" data-gpio="27,22">
+            <label class="custom-control-label" for="customSwitch_legright">右足</label>
+            <div id="light-legright" data-label="右足">右足の状態: ライトオフ</div>
           </div>
         </div>
         <div class="image-container">
@@ -104,15 +114,24 @@
               <button type="submit" class="btn btn-primary">LED全消灯</button>
           </form>
           <br>
-          <form method="post" class='ajax-form' action="{% url 'accounts:ledAllBlink' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledBlink' %}">
               {% csrf_token %}
-              <input type="hidden" name="url" value='ledAllBlink/'>
-              <button type="submit" class="btn btn-primary">LED全点滅</button>
-              <Input type="text" name="val01" value="1" size="1">秒ごとに
-              <Input type="text" name="val02" value="3" size="1">回点滅
+              <input type="hidden" name="url" value='ledBlink/'>
+              <button type="submit" class="btn btn-primary">バルカン点滅</button>
+              <Input type="text" name="val01" value="12" size="1">GPIOピン
+              <Input type="text" name="val02" value="0.1" size="1">間隔
+              <Input type="text" name="val03" value="5" size="1">回数
           </form>
           <br>
-          <form method="post" class='ajax-form' action="{% url 'accounts:ledPattern' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:ledAllBlink' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='ledAllBlink/'>
+            <button type="submit" class="btn btn-primary">LED全点滅</button>
+            <Input type="text" name="val01" value="1" size="1">秒ごとに
+            <Input type="text" name="val02" value="3" size="1">回点滅
+        </form>
+        <br>
+        <form method="post" class='ajax-form' action="{% url 'accounts:ledPattern' %}">
               {% csrf_token %}
               <input type="hidden" name="url" value='ledPattern/'>
               <button type="submit" class="btn btn-primary">音声＋LED点滅</button>
@@ -164,7 +183,7 @@
       </div>
       <!-- Item#3 -->
       <div class="tab-pane fade" id="item3" role="tabpanel" aria-labelledby="item3-tab">
-        <div id="pattern999">
+        <!-- <div id="pattern999">
           <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value='playPattern/'>
@@ -172,30 +191,79 @@
             <button type="submit" class="btn btn-primary">サンプル</button>
           </form>
         </div>
+        <div id="pattern901">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='901'>
+            <button type="submit" class="btn btn-primary">パターン1</button>
+          </form>
+        </div>
+        <div id="pattern902">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='902'>
+            <button type="submit" class="btn btn-primary">パターン2</button>
+          </form>
+        </div>
+        <div id="pattern903">
+          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+            {% csrf_token %}
+            <input type="hidden" name="url" value='playPattern/'>
+            <input type="hidden" name="val01" value='903'>
+            <button type="submit" class="btn btn-primary">パターン3</button>
+          </form>
+        </div> -->
         <div id="pattern101">
           <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value='playPattern/'>
             <input type="hidden" name="val01" value='101'>
-            <button type="submit" class="btn btn-primary">パターン1</button>
+            <button type="submit" class="btn btn-primary">野中スペシャル１</button>
           </form>
-        </div>
-        <div id="pattern102">
-          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
+          <form method="post" class='ajax-form' action="{% url 'accounts:stopSound' %}">
             {% csrf_token %}
-            <input type="hidden" name="url" value='playPattern/'>
-            <input type="hidden" name="val01" value='102'>
-            <button type="submit" class="btn btn-primary">パターン2</button>
+            <input type="hidden" name="url" value='stopSound/'>
+
+            <button type="submit" class="btn btn-primary">Stop</button>
           </form>
         </div>
-        <div id="pattern103">
-          <form method="post" class='ajax-form' action="{% url 'accounts:playPattern' %}">
-            {% csrf_token %}
-            <input type="hidden" name="url" value='playPattern/'>
-            <input type="hidden" name="val01" value='103'>
-            <button type="submit" class="btn btn-primary">パターン3</button>
-          </form>
+        <div class="image-container">
+          <!-- 動画再生用のvideoタグを追加 -->
+          <video id="myVideo" controls>
+            <source src="/home/rpiuser/opt/sounds/projectG/gundamMovie1.mp4" type="video/mp4">
+            お使いのブラウザは動画タグに対応していません。
+          </video>
+          <!-- 動画コントロール用のボタンを追加 -->
+          <div>
+            <button id="playButton" class="btn btn-primary">Play</button>
+            <button id="pauseButton" class="btn btn-primary">Pause</button>
+            <button id="stopButton" class="btn btn-primary">Stop</button>
+          </div>
         </div>
+        <script>
+          // JavaScript to control the video playback
+          document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('myVideo');
+            var playButton = document.getElementById('playButton');
+            var pauseButton = document.getElementById('pauseButton');
+            var stopButton = document.getElementById('stopButton');
+        
+            playButton.addEventListener('click', function() {
+              video.play();
+            });
+        
+            pauseButton.addEventListener('click', function() {
+              video.pause();
+            });
+        
+            stopButton.addEventListener('click', function() {
+              video.pause();
+              video.currentTime = 0;
+            });
+          });
+        </script>     
       </div>
     </div>
   </div>

@@ -1,6 +1,135 @@
 {
     "patternList":[
         {
+            "no": 101,
+            "description": "野中さんパターン1",
+            "soundFile": "gundamBGM1.mp3",
+            "soundStartSec": 3,
+            "ligtingPatternList":[
+                {
+                    "description": "メインカメラ点灯",
+                    "sleepSec": 3,
+                    "patternNo": 1,
+                    "gpio": [20,21]
+                },
+                {
+                    "description": "胸点灯",
+                    "sleepSec": 4,
+                    "patternNo": 1,
+                    "gpio": [6]
+                },
+                {
+                    "description": "何か点灯(肩)",
+                    "sleepSec": 3.5,
+                    "patternNo": 1,
+                    "gpio": [13,19,26,16,25]
+                },
+                {
+                    "description": "全て消灯",
+                    "sleepSec": 7,
+                    "patternNo": 2,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24,17,27,22]
+                },
+                {
+                    "description": "全て点灯",
+                    "sleepSec": 1,
+                    "patternNo": 1,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24,17,27,22]
+                },
+                {
+                    "description": "サーボ大きく回転",
+                    "sleepSec": 3,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 120
+                },
+                {
+                    "description": "サーボ大きく回転",
+                    "sleepSec": 1,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 20
+                },
+                {
+                    "description": "何か点滅(足)",
+                    "sleepSec": 3,
+                    "patternNo": 3,
+                    "gpio": [23,17,27,22],
+                    "span": 0.8,
+                    "count": 2
+                },
+                {
+                    "description": "サーボ大きく回転",
+                    "sleepSec": 2,
+                    "patternNo": 4,
+                    "gpio": [18],
+                    "angle": 70
+                },
+                {
+                    "description": "何か点滅(肩)",
+                    "sleepSec": 0,
+                    "patternNo": 3,
+                    "gpio": [26, 19, 16, 25],
+                    "span": 0.8,
+                    "count": 2
+                },
+                {
+                    "description": "何か点滅(顔)",
+                    "sleepSec": 3,
+                    "patternNo": 3,
+                    "gpio": [21,20,12],
+                    "span": 0.8,
+                    "count": 2
+                },
+                {
+                    "description": "バルカン点滅",
+                    "sleepSec": 8,
+                    "patternNo": 3,
+                    "gpio": [12],
+                    "span": 0.1,
+                    "count": 20
+                },
+                {
+                    "description": "足点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [23,17,27,22]
+                },
+                {
+                    "description": "体点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [26, 19, 16, 25,6,24,13]
+                },
+                {
+                    "description": "顔点灯",
+                    "sleepSec": 2,
+                    "patternNo": 1,
+                    "gpio": [21,20,12]
+                },
+                {
+                    "description": "すべて点滅",
+                    "sleepSec":4,
+                    "patternNo": 3,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24,17,27,22],
+                    "span": 0.06,
+                    "count": 25
+                },
+                {
+                    "description": "全て消灯",
+                    "sleepSec": 0,
+                    "patternNo": 2,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24,17,27,22]
+                },
+                {
+                    "description": "全て点滅",
+                    "sleepSec": 3,
+                    "patternNo": 1,
+                    "gpio": [20,21,6,13,19,26,16,25,12,23,24,17,27,22]
+                }
+            ]
+        },
+        {
             "no": 999,
             "description" : "サンプル",
             "soundFile": "kensirou.mp3",
@@ -26,10 +155,10 @@
             ]
         },
         {
-            "no": 101,
+            "no": 901,
             "description": "パターン１",
             "soundFile": "kensirou.mp3",
-            "soundStartSec": 3,
+            "soundStartSec": 5,
             "ligtingPatternList":[
                 {
                     "description": "足点灯",
@@ -90,7 +219,7 @@
            ]
         },
         {
-            "no": 102,
+            "no": 902,
             "description": "パターン2",
             "soundFile": "kensirou.mp3",
             "soundStartSec": 3,
@@ -134,7 +263,7 @@
            ]
         },
         {
-            "no": 103,
+            "no": 903,
             "description": "パターン3",
             "soundFile": "kensirou.mp3",
             "soundStartSec": 3,
@@ -231,87 +360,6 @@
                     "patternNo": 2,
                     "gpio": [20]
                 }                
-           ]
-        },
-         {
-            "no": 103,
-            "description": "野中さんパターン1",
-            "soundFile": "gundam_music1.mp3",
-            "soundStartSec": 3,
-            "ligtingPatternList":[
-                {
-                    "description": "メインカメラ点灯",
-                    "sleepSec": 0,
-                    "patternNo": 1,
-                    "gpio": [20,21],
-                },
-                {
-                    "description": "胸点灯",
-                    "sleepSec": 5,
-                    "patternNo": 1,
-                    "gpio": [13]
-                },
-                {
-                    "description": "何か点灯(肩)",
-                    "sleepSec": 4,
-                    "patternNo": 1,
-                    "gpio": [19,26,16,25]
-                },
-                {
-                    "description": "全て点灯",
-                    "sleepSec": 9,
-                    "patternNo": 1,
-                    "gpio": [20,21,6,13,19,26,16,25,12,23,24]
-                },
-                {
-                    "description": "サーボ大きく回転",
-                    "sleepSec": 2,
-                    "patternNo": 4,
-                    "gpio": [18],
-                    "angle": 120
-                },
-                {
-                    "description": "サーボ小さく回転",
-                    "sleepSec": 4,
-                    "patternNo": 4,
-                    "gpio": [18],
-                    "angle": 90
-                },
-                {
-                    "description": "サーボ大きく回転",
-                    "sleepSec": 7,
-                    "patternNo": 4,
-                    "gpio": [18],
-                    "angle": 20
-                },
-                {
-                    "description": "何か点灯(腰、足)",
-                    "sleepSec": 4,
-                    "patternNo": 1,
-                    "gpio": [23,24]
-                },
-                {
-                    "description": "ビームライフル(バルカン以外点滅)",
-                    "sleepSec": 8,
-                    "patternNo": 3,
-                    "gpio": [20,21,6,13,19,26,16,25,23,24],
-                    "span": 0.2,
-                    "count": 10
-                },
-                {
-                    "description": "バルカン点滅",
-                    "sleepSec": 8,
-                    "patternNo": 3,
-                    "gpio": [12],
-                    "span": 0.1,
-                    "count": 10
-                },
-                {
-                    "description": "バーニア点灯",
-                    "sleepSec": 7,
-                    "patternNo": 2,
-                    "gpio": [6]
-                }
            ]
         }
     ]
