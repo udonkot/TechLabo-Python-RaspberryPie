@@ -203,3 +203,39 @@
 .switch-container div {
     flex-grow: 1; /* divを左寄せにする */
 }
+
+body {
+    background-image: url('../images/CUSTOM_G_HEAD.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 背景画像をスクロールに対して固定 */
+
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 50%;
+    height: 100%;
+    /* display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+.psudo-line-lt {
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(to left top, transparent 49.5%, black 49.5%, black 50.5%, transparent 50.5%);
+}

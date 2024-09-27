@@ -3,7 +3,7 @@
 
 {% block title %}
 {% if user.is_authenticated %}
-    <div class="h2">RaspberryPie 操作画面</div>
+    <div class="h2">ProjectG 操作画面</div>
     <div class="logout-container">
       <form method="post" action="{% url 'accounts:logout' %}">
         {% csrf_token %}
@@ -25,13 +25,13 @@
     <!-- タブ一覧 -->
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">Item#1</a>
+        <a class="nav-link active" id="item1-tab" data-toggle="tab" href="#item1" role="tab" aria-controls="item1" aria-selected="true">部分点灯</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" role="tab" aria-controls="item2" aria-selected="false">Item#2</a>
+        <a class="nav-link" id="item2-tab" data-toggle="tab" href="#item2" role="tab" aria-controls="item2" aria-selected="false">デバッグ</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" role="tab" aria-controls="item3" aria-selected="false">Item#3</a>
+        <a class="nav-link" id="item3-tab" data-toggle="tab" href="#item3" role="tab" aria-controls="item3" aria-selected="false">音楽＋点灯</a>
       </li>
     </ul>
 
@@ -80,9 +80,9 @@
             <div id="light-legright" data-label="右足">右足の状態: ライトオフ</div>
           </div>
         </div>
-        <div class="image-container">
-          <img src="{% static 'images/MEGA_G.jpg' %}" alt="Sample Image" class="img-fluid">
-        </div>
+        <!-- <div class="image-container">
+          <img width="30%" height="30%" src="{% static 'images/CUSTOM_G.jpg' %}" alt="Sample Image" class="img-fluid">
+        </div> -->
       </div>
       <!-- Item#2 -->
       <div class="tab-pane fade" id="item2" role="tabpanel" aria-labelledby="item2-tab">
@@ -222,25 +222,13 @@
             <input type="hidden" name="val01" value='101'>
             <button type="submit" class="btn btn-primary">野中スペシャル１</button>
           </form>
+          </br>
           <form method="post" class='ajax-form' action="{% url 'accounts:stopSound' %}">
             {% csrf_token %}
             <input type="hidden" name="url" value='stopSound/'>
 
             <button type="submit" class="btn btn-primary">Stop</button>
           </form>
-        </div>
-        <div class="image-container">
-          <!-- 動画再生用のvideoタグを追加 -->
-          <video id="myVideo" controls>
-            <source src="/home/rpiuser/opt/sounds/projectG/gundamMovie1.mp4" type="video/mp4">
-            お使いのブラウザは動画タグに対応していません。
-          </video>
-          <!-- 動画コントロール用のボタンを追加 -->
-          <div>
-            <button id="playButton" class="btn btn-primary">Play</button>
-            <button id="pauseButton" class="btn btn-primary">Pause</button>
-            <button id="stopButton" class="btn btn-primary">Stop</button>
-          </div>
         </div>
         <script>
           // JavaScript to control the video playback
