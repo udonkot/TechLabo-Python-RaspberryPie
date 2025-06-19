@@ -9,6 +9,9 @@ pygame.mixer.init()
 # Setup GPIO pins (example uses GPIO.BOARD mode for pin numbering)
 LED_PIN = 20
 GPIO.setmode(GPIO.BCM)
+
+# GPIO オフ
+GPIO.setwarnings(False)
 GPIO.setup(LED_PIN, GPIO.OUT)
 
 async def play_music(file_path):
@@ -30,9 +33,11 @@ async def blink_led(pin, interval=1):
 async def main():
     # Run both tasks concurrently
     await asyncio.gather(
-        play_music('/home/rpiuser/opt/sounds/gundam_voice_amuro1.mp3'),
+        # play_music('/home/rpiuser/opt/sounds/gundam_voice_amuro1.mp3'),
         blink_led(LED_PIN, 0.5)  # Blink every 0.5 seconds
     )
+
+    GPIO.cleanup()  # Cleanup GPIO settings
 
 # Run the main function in the asyncio event loop
 if __name__ == '__main__':
