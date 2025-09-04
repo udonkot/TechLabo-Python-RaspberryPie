@@ -9,6 +9,7 @@ def create_beep(frequency, duration, filename):
     arr = np.array([4096 * np.sin(2.0 * np.pi * frequency * x / sample_rate) 
                      for x in range(frames)]).astype(np.int16)
     stereo = np.array([arr, arr]).T
+    stereo = np.ascontiguousarray(stereo)  # C-contiguousに変換
     sound = pygame.sndarray.make_sound(stereo)
     pygame.mixer.Sound.set_volume(sound, 0.5)
     # WAVファイルとして保存
