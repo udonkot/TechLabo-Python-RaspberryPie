@@ -799,7 +799,11 @@ class GundamRobotController:
         print("コンポーネントを初期化中...")
         self.led = LEDController(self.pi)
         self.servo = ServoController(self.pi)
-        self.lcd = LCDController(self.pi)
+        
+        # LCDアドレスを設定から取得（デフォルトは0x27）
+        lcd_address = int(getattr(Config, 'LCD_ADDRESS', '0x27'), 16)
+        self.lcd = LCDController(self.pi, address=lcd_address)
+        
         self.camera = CameraController(self.pi, self.lcd)
         self.slack = SlackUploader(self.pi)
         self.sound = SoundController(self.pi)
