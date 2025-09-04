@@ -1,0 +1,11 @@
+{
+    "SLACK_TOKEN": "xoxb-your-slack-bot-token",
+    "SLACK_CHANNEL": "#general",
+    "CAMERA_RESOLUTION": [
+        1920,
+        1080
+    ],
+    "CAMERA_PREVIEW_TIME": 3,
+    "LCD_ADDRESS": "0x3C",
+    "IR_SENSOR_SENSITIVITY": 0.5
+}
