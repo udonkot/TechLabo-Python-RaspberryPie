@@ -10,10 +10,12 @@ GPIO.setmode(GPIO.BCM)  # Use BCM pin numbering
 GPIO.setup(LED_PIN, GPIO.OUT)
 
 try:
-    print("LED is ON")
-    GPIO.output(LED_PIN, GPIO.HIGH)  # Turn on the LED
-    time.sleep(5)  # Keep the LED on for 5 seconds
-    print("LED is OFF")
-    GPIO.output(LED_PIN, GPIO.LOW)  # Turn off the LED
+    while True:
+        print("LED is ON")
+        time.sleep(1)  # Keep the LED on for 5 seconds
+        GPIO.output(LED_PIN, GPIO.HIGH)  # Turn on the LED
+        time.sleep(1)  # Keep the LED on for 5 seconds
+        print("LED is OFF")
+        GPIO.output(LED_PIN, GPIO.LOW)  # Turn off the LED
 finally:
     GPIO.cleanup()  # Clean up GPIO settings

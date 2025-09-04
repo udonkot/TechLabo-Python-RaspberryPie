@@ -1,77 +1,56 @@
+import pigpio
 import time
+import random
 
-import RPi.GPIO as GPIO
+# GPIOピンの設定
+SERVO_PIN = 26
 
-# Set the GPIO mode
-print('Set the GPIO mode')
-GPIO.setmode(GPIO.BCM)
+# pigpioの初期化
+pi = pigpio.pi()
 
-# Set the GPIO pin for the servo motor
-servo_pin = 18
+def set_angle(angle):
+    """
+    サーボモータを指定した角度に滑らかに動かす
+    :param angle: 目標角度 (0～180度)
+    """
+    pulse_width = 500 + (angle / 180.0) * 2000  # パルス幅を計算 (500～2500μs)
+    pi.set_servo_pulsewidth(SERVO_PIN, pulse_width)
 
-# Set the frequency for PWM
-frequency = 50
+try:
+    while True:
+        # 0から180までの角度を順に動かす
+        # for angle in range(0, 181, 5):
+        #     print(f"Moving to {angle} degrees")
+        #     set_angle(angle)
+        #     time.sleep(1)
+        # # 180から0までの角度を順に動かす
+        # for angle in range(180, -1, -5):
+        #     print(f"Moving to {angle} degrees")
+        #     set_angle(angle)
+        #     time.sleep(1)
+        # # 0度に移動
+        print("Move to 0 degrees")
+        set_angle(0)
+        time.sleep(random.random()+1)
 
-# Set the duty cycle for the servo motor
-duty_cycle = 7.5
+        # # 90度に移動
+        print("Move to 90 degrees")
+        set_angle(90)
+        time.sleep(random.random()+1)
 
-# Configure the GPIO pin as PWM output
-print('Configure the GPIO pin as PWM output')
-GPIO.setup(servo_pin, GPIO.OUT)
-pwm = GPIO.PWM(servo_pin, frequency)
+        # # 180度に移動
+        print("Move to 180 degrees")
+        set_angle(180)
+        time.sleep(random.random()+1)
 
-# Start the PWM with the initial duty cycle
-print('Start the PWM')
-pwm.start(duty_cycle)
-
-def main():
-    try:
-
-
-
-        while True:
-            # pwm.ChangeDutyCycle(7.5)  # Neutral position
-            # print('Slowly move loop')
-            # for angle in range(0, 180, 1):
-            #     duty_cycle = angle / 18 + 2.5
-            #     pwm.ChangeDutyCycle(duty_cycle)
-            #     time.sleep(0.3) 
-            # time.sleep(5)
-
-            # for angle in range(1, 3, 1):
-            #     pwm.ChangeDutyCycle(angle * 2.5)  # Neutral position
-            #     time.sleep(1)
-
-            # for angle in range(3, 1, -1):
-            #     pwm.ChangeDutyCycle(angle * 2.5)  # Neutral position
-            #     time.sleep(1)
-
+        # # 90度に移動
+        print("Move to 90 degrees")
+        set_angle(90)
+        time.sleep(random.random()+1)
 
 
-            # # Change the duty cycle to rotate the servo motor
-            print('move 7.5')
-            pwm.ChangeDutyCycle(7.5)  # Neutral position
-            time.sleep(2)
-            print('move 10.5')
-            pwm.ChangeDutyCycle(10.5)  # Clockwise rotation
-            time.sleep(2)
-            # # print('move 7.5')
-            # pwm.ChangeDutyCycle(7.5)  # Neutral position
-            # time.sleep(2)
-            print('move 5')
-            pwm.ChangeDutyCycle(5)  # Neutral position
-            time.sleep(2)
-            # # print('move 2.5')
-            # pwm.ChangeDutyCycle(2.5)  # Counter-clockwise rotation
-            # time.sleep(2)
-            # # print('move 5')
-            # pwm.ChangeDutyCycle(5)  # Neutral position
-            # time.sleep(1)
-
-    except KeyboardInterrupt:
-        # Stop the PWM and cleanup the GPIO
-        pwm.stop()
-        GPIO.cleanup()
-
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    print("終了します")
+finally:
+    pi.set_servo_pulsewidth(SERVO_PIN, 0)  # サーボを停止
+    pi.stop()
