@@ -800,9 +800,22 @@ class GundamRobotController:
         self.led = LEDController(self.pi)
         self.servo = ServoController(self.pi)
         
-        # LCDアドレスを設定から取得（デフォルトは0x27）
-        lcd_address = int(getattr(Config, 'LCD_ADDRESS', '0x27'), 16)
-        self.lcd = LCDController(self.pi, address=lcd_address)
+        # LCDアドレスを設定から取得してLCD初期化
+        try:
+            lcd_address = int(getattr(Config, 'LCD_ADDRESS', '0x27'), 16)
+            print(f"LCD初期化中 (アドレス: {hex(lcd_address)})...")
+            self.lcd = LCDController(self.pi, lcd_address)
+        except Exception as e:
+            print(f"LCD初期化エラー: {e}")
+            # LCDなしでも動作を続ける（ダミーオブジェクト作成）
+            class DummyLCD:
+                def display_text(self, *args): pass
+                def display_pattern(self, *args): pass
+                def set_backlight(self, *args): pass
+                def clear(self): pass
+                def cleanup(self): pass
+            self.lcd = DummyLCD()
+            print("LCD無しで続行します")
         
         self.camera = CameraController(self.pi, self.lcd)
         self.slack = SlackUploader(self.pi)
