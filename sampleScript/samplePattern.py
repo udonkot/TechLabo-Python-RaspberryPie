@@ -1,7 +1,8 @@
 import asyncio
 import time
 import pygame
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
+from fake_rpi.RPi import GPIO
 
 # Initialize pygame for music playback
 pygame.mixer.init()

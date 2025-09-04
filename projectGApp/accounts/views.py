@@ -1,7 +1,9 @@
-import asyncio
+# import asyncio
 
 from urllib import request
 from django.http import JsonResponse
+import json
+
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView as BaseLoginView, LogoutView as BaseLogoutView
@@ -10,11 +12,14 @@ from .forms import LoginForm
 from accounts.utils.ledUtils import gpioSetup, lightsOn, lightsOff, allLighting
 from accounts.utils.motorUtils import roundMotor
 
-import RPi.GPIO as GPIO
+from django.views.decorators.csrf import csrf_exempt
+
+
+from fake_rpi.RPi import GPIO
 
 import sys
 sys.path.append('/home/rpiuser/github_repo/TechLabo-Python-RaspberryPie/sampleScript')
-from samplePattern import main as sampleMain
+# from samplePattern import main as sampleMain
 
 LIGHT_GROUP_ALL = [20,21,6,13,19,26,16,25]
 #LIGHT_GROUP_ALL = [16,20,21]
@@ -69,7 +74,7 @@ def LedAllBlink(request):
 # 一定時間点滅
 def LedPattern(request):
     print('start LedPattern')
-    asyncio.run(sampleMain())
+    # asyncio.run(sampleMain())
     print('end LedPattern')
     return render(request, 'index.html')
 
@@ -78,3 +83,24 @@ def RoundMotor(request):
     count = int(request.POST.get('count', 3))
     roundMotor(count)
     return render(request, 'index.html')
+
+
+def index(request):
+    return render(request, 'index.html')
+
+def item1(request):
+    return render(request, 'tab1.html')
+
+@csrf_exempt
+def update_switch_state(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        switch_id = data.get('switchId')
+        state = data.get('state')
+
+        # スイッチの状態を処理するロジックをここに追加
+        # 例えば、データベースに保存するなど
+
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+

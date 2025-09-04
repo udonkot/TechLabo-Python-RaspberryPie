@@ -4,7 +4,7 @@ from .forms import ItemForm
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-import RPi.GPIO as GPIO
+from fake_rpi.RPi import GPIO
 
 # Setup GPIO
 LED_PIN = 17 # Change this to your GPIO pin

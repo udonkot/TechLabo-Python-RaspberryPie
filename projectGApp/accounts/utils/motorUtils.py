@@ -1,6 +1,7 @@
 import time
 
-import RPi.GPIO as GPIO
+#import fake_rpi.RPi as GPIO
+from fake_rpi.RPi import GPIO
 
 # Set the GPIO mode
 print('Set the GPIO mode')

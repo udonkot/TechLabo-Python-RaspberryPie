@@ -1,5 +1,6 @@
 import time
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
+from fake_rpi.RPi import GPIO
 
 # GPIOの初期化
 def gpioSetup(gpioList):

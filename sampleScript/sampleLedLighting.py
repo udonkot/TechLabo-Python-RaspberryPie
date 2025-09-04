@@ -1,5 +1,5 @@
 import time
-import RPi.GPIO as GPIO
+import fake_rpi.RPi as GPIO
 
 LIGHT_GROUP_ALL = [17,27,26,16,20,21,19,13,6]
 #LIGHT_GROUP_ALL = [16,20,21]

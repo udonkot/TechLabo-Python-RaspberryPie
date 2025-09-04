@@ -13,5 +13,6 @@ urlpatterns = [
     path('ledAllBlink/', views.LedAllBlink, name='ledAllBlink'),
     path('roundMotor/', views.RoundMotor, name='roundMotor'),
     path('ledPattern/', views.LedPattern, name='ledPattern'),
-    
+    path('item1/', views.item1, name='item1'),
+    path('update-switch-state/', views.update_switch_state, name='update_switch_state'),    
 ]
