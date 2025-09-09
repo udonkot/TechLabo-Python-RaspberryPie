@@ -144,8 +144,8 @@ class WiiRemoteController(RobotComponent):
             return
             
         actions = {
-            'left': lambda: self.robot.servo.rotate_step(-10),
-            'right': lambda: self.robot.servo.rotate_step(10),
+            'left': lambda: self.robot.scroll_help(-1),      # Modified: LCD help scroll down
+            'right': lambda: self.robot.scroll_help(1),     # Modified: LCD help scroll up
             'up': lambda: self.robot.servo.rotate_step(10),
             'down': lambda: self.robot.servo.rotate_step(-10),
             '2': lambda: self.robot.fire_vulcan(),

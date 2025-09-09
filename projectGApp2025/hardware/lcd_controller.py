@@ -30,9 +30,9 @@ class LCDController(RobotComponent):
         try:
             serial = i2c(port=1, address=0x27)
             self.device = ssd1306(serial, width=128, height=64)
-            self.display_text("System Ready", "待機中...")
+            self.display_text("System Ready", "Standby...")
         except Exception as e:
-            print(f"LCD初期化エラー: {e}")
+            print(f"LCD initialization error: {e}")
             self.device = None
     
     def display_text(self, line1: str, line2: str = "", line3: str = ""):
@@ -50,11 +50,11 @@ class LCDController(RobotComponent):
     def display_pattern(self, pattern: str):
         """パターン表示"""
         patterns = {
-            'startup': ("起動中...", ""),
-            'ready': ("準備完了!", "操作可能"),
-            'vulcan': ("バルカン発射!", "ドドドドド"),
-            'konami': ("隠しコマンド!", "発動！！"),
-            'motion': ("動体検知!", "自動撮影")
+            'startup': ("Starting up...", ""),
+            'ready': ("Ready!", "Operational"),
+            'vulcan': ("Vulcan Fire!", "Rapid shots"),
+            'konami': ("Secret Command!", "Activated!"),
+            'motion': ("Motion detected!", "Auto capture")
         }
         text = patterns.get(pattern, ("", ""))
         self.display_text(text[0], text[1])

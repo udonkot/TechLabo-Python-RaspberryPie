@@ -35,13 +35,13 @@ class CameraController(RobotComponent):
             self.camera.start()
             time.sleep(2)  # カメラの起動待ち
         except Exception as e:
-            print(f"カメラ初期化エラー: {e}")
+            print(f"Camera initialization error: {e}")
             self.camera = None
     
     def capture_with_countdown(self) -> Optional[str]:
         """カウントダウン付き撮影"""
         if not self.camera:
-            print('no camera')
+            print('No camera available')
             return None
             
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -62,7 +62,7 @@ class CameraController(RobotComponent):
         self.camera.capture_file(str(filepath))
         
         if self.lcd:
-            self.lcd.display_text("Compreted!!", str(filename))
+            self.lcd.display_text("Completed!!", str(filename))
         
         return str(filepath)
     

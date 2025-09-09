@@ -30,7 +30,21 @@ class GundamRobotController:
         # pigpio初期化
         self.pi = pigpio.pi()
         if not self.pi.connected:
-            raise Exception("pigpioデーモンに接続できません。sudo pigpiod を実行してください。")
+            raise Exception("Cannot connect to pigpio daemon. Please run: sudo pigpiod")
+        
+        # ヘルプメッセージ（LCDの2行20文字対応）
+        self.help_messages = [
+            ("D-PAD : Servo Ctrl", "(L/R for help)"),
+            ("2 Button : Vulcan", "Fire"),
+            ("1 Button : Random", "Light Show"),
+            ("A Button : Camera", "-> Slack"),
+            ("+ Button : Battle", "Mode"),
+            ("- Button : Standby", "Mode"),
+            ("HOME : Show Status", ""),
+            ("B+Others : Combo", "Tech"),
+            ("Secret:", "↑↑↓↓←→←→21"),
+        ]
+        self.help_index = 0
         
         # コンポーネント初期化
         print("コンポーネントを初期化中...")
@@ -90,6 +104,21 @@ class GundamRobotController:
             return self.wii_remote.start_monitoring()
         return False
     
+    def scroll_help(self, direction: int):
+        """ヘルプメッセージをスクロール"""
+        if direction > 0:  # KEY_RIGHT: 上にスクロール
+            self.help_index = (self.help_index - 1) % len(self.help_messages)
+        else:  # KEY_LEFT: 下にスクロール
+            self.help_index = (self.help_index + 1) % len(self.help_messages)
+        
+        self.show_help_on_lcd()
+        
+    def show_help_on_lcd(self):
+        """現在のヘルプメッセージをLCDに表示"""
+        line1, line2 = self.help_messages[self.help_index]
+        self.lcd.display_text(line1, line2)
+        print(f"Help displayed: {line1} / {line2}")
+    
     def fire_vulcan(self):
         """バルカン発射"""
         print("バルカン発射！")
@@ -121,17 +150,17 @@ class GundamRobotController:
     
     def _upload_to_slack(self, filepath: str):
         """Slackへのアップロード（非同期）"""
-        message = f"🤖 ガンダムロボットからの写真 📸\n撮影時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        message = f"🤖 Photo from Gundam Camera 📸\nCaptured at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         if self.slack.upload_image(filepath, message):
-            print("Slackアップロード成功")
-            self.lcd.display_text("Upload OK", "Slack送信完了")
+            print("Slack upload successful")
+            self.lcd.display_text("Upload OK", "Slack sent")
         else:
-            print("Slackアップロード失敗")
-            self.lcd.display_text("Upload Failed", "送信失敗")
+            print("Slack upload failed")
+            self.lcd.display_text("Upload Failed", "Send failed")
     
     def on_motion_detected(self):
         """モーション検知時の処理"""
-        print("動きを検知！")
+        print("Motion detected!")
         self.lcd.display_pattern('motion')
         self.led.play_pattern('alert')
         self.sound.play_sound('alert')
@@ -143,7 +172,7 @@ class GundamRobotController:
         
     def execute_konami_command(self):
         """コナミコマンド実行"""
-        print("🎮 隠しコマンド発動！")
+        print("🎮 Secret command activated!")
         self.lcd.display_pattern('konami')
         self.led.play_pattern('konami')
         self.sound.play_sound('konami')
@@ -167,20 +196,20 @@ class GundamRobotController:
         
         if button in combos:
             pattern, display_name = combos[button]
-            print(f"コンボ発動: B + {button.upper()}")
-            self.lcd.display_text("Combo!", f"B + {button.upper()}", display_name)
+            print(f"Combo activated: B + {button.upper()}")
+            self.lcd.display_text("Combo!", f"B + {button.upper()}")
             self.led.play_pattern(pattern)
             
     def change_mode(self, mode: str):
         """動作モード変更"""
         self.mode = mode
         mode_display = {
-            'battle': ("Mode: Battle", "battle"),
-            'standby': ("Mode: Standby", "wait")
+            'battle': ("Mode: Battle", "Armed"),
+            'standby': ("Mode: Standby", "Waiting")
         }
         
         if mode in mode_display:
-            print(f"モード変更: {mode}")
+            print(f"Mode changed: {mode}")
             self.lcd.display_text(*mode_display[mode])
             
     def show_status(self):
@@ -194,7 +223,7 @@ class GundamRobotController:
         
     def start_ir_monitoring(self):
         """赤外線センサー監視開始"""
-        print("赤外線センサー監視開始")
+        print("IR sensor monitoring started")
         self.ir_sensor.start_monitoring()
         
     def run(self):
@@ -243,16 +272,16 @@ class GundamRobotController:
                     pass
                 
         except KeyboardInterrupt:
-            print("\n\n終了処理中...")
+            print("\n\nShutting down...")
         except Exception as e:
-            print(f"\nエラー発生: {e}")
+            print(f"\nError occurred: {e}")
         finally:
             self.cleanup()
             
     def cleanup(self):
         """全体のクリーンアップ"""
         self.is_running = False
-        print("クリーンアップ中...")
+        print("Cleaning up...")
         
         # BGM停止
         self.sound.stop_bgm()
@@ -270,10 +299,10 @@ class GundamRobotController:
                 try:
                     component.cleanup()
                 except Exception as e:
-                    print(f"{component.name} クリーンアップエラー: {e}")
+                    print(f"{component.name} cleanup error: {e}")
         
         # pigpio接続を閉じる
         if self.pi.connected:
             self.pi.stop()
         
-        print("✅ システム正常終了")
+        print("✅ System shutdown complete")
