@@ -29,6 +29,9 @@ from luma.core.render import canvas
 from luma.oled.device import ssd1306
 from PIL import Image, ImageDraw, ImageFont
 
+from lcd1602Test import LCD1602Test
+from playsound import playsound
+
 # ===== 設定クラス =====
 class Config:
     """設定を管理するクラス"""
@@ -402,6 +405,7 @@ class CameraController(RobotComponent):
     def capture_with_countdown(self) -> Optional[str]:
         """カウントダウン付き撮影"""
         if not self.camera:
+            print('no camera')
             return None
             
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -412,17 +416,17 @@ class CameraController(RobotComponent):
         # カウントダウン
         for i in range(Config.CAMERA_PREVIEW_TIME, 0, -1):
             if self.lcd:
-                self.lcd.display_text(f"撮影まで: {i}", "Smile!")
+                self.lcd.display_text(f"Count Down...: {i}", "Smile!")
             time.sleep(1)
         
         if self.lcd:
-            self.lcd.display_text("撮影中!", "チーズ!")
+            self.lcd.display_text("Fire!!", "Cheeese!!!")
         
         # 撮影
         self.camera.capture_file(str(filepath))
         
         if self.lcd:
-            self.lcd.display_text("撮影完了!", str(filename))
+            self.lcd.display_text("Compreted!!", str(filename))
         
         return str(filepath)
     
@@ -435,15 +439,25 @@ class CameraController(RobotComponent):
 class LCDController(RobotComponent):
     """LCD制御クラス"""
     
-    def __init__(self, pi: pigpio.pi):
-        super().__init__("LCD Controller", pi)
-        self.device = None
+    # def __init__(self, pi: pigpio.pi):
+    #     super().__init__("LCD Controller", pi)
+    #     self.device = None
+    #     self.setup()
+
+    def __init__(self, pi, address=0x27):
+        """
+        LCDの初期化
+        :param pi: pigpioインスタンス
+        :param address: LCDのI2Cアドレス
+        """
+        self.pi = pi
+        self.address = address
         self.setup()
-        
+
     def setup(self):
         """LCDの初期設定"""
         try:
-            serial = i2c(port=1, address=0x3C)
+            serial = i2c(port=1, address=0x27)
             self.device = ssd1306(serial, width=128, height=64)
             self.display_text("System Ready", "待機中...")
         except Exception as e:
@@ -490,6 +504,7 @@ class SlackUploader(RobotComponent):
     def upload_image(self, filepath: str, message: str = "新しい写真を撮影しました！"):
         """画像をSlackにアップロード"""
         try:
+            print(Config.SLACK_CHANNEL)
             with open(filepath, 'rb') as file:
                 response = self.client.files_upload_v2(
                     channel=Config.SLACK_CHANNEL,
@@ -519,32 +534,37 @@ class SoundController(RobotComponent):
         """サウンドファイルを読み込む"""
         sound_files = {
             'vulcan': 'vulcan.wav',
-            'startup': 'startup.wav',
+            'startup': 'monoai.mp3',
             'capture': 'shutter.wav',
             'alert': 'alert.wav',
-            'konami': 'secret.wav',
-            'bgm': 'bgm.mp3'
+            'konami': 'gundamBGM1.mp3',
+            'bgm': 'gundam_op.mp3'
         }
         
         Config.SOUNDS_DIR.mkdir(exist_ok=True)
         for name, filename in sound_files.items():
             filepath = Config.SOUNDS_DIR / filename
             if filepath.exists():
-                self.sounds[name] = pygame.mixer.Sound(str(filepath))
+                print(filepath)
+
+                self.sounds[name] = filepath
+                # self.sounds[name] = pygame.mixer.Sound(str(filepath))
             else:
                 print(f"サウンドファイル未検出: {filepath}")
     
     def play_sound(self, sound_name: str):
         """指定された音を再生"""
         if sound_name in self.sounds:
-            self.sounds[sound_name].play()
+            print(self.sounds[sound_name])
+            playsound(self.sounds[sound_name])
     
     def play_bgm(self, filename: str = 'bgm.mp3'):
         """BGMを再生"""
         filepath = Config.SOUNDS_DIR / filename
         if filepath.exists():
-            pygame.mixer.music.load(str(filepath))
-            pygame.mixer.music.play(-1)  # ループ再生
+            playsound(filepath)
+            # pygame.mixer.music.load(str(filepath))
+            # pygame.mixer.music.play(-1)  # ループ再生
     
     def stop_bgm(self):
         """BGMを停止"""
@@ -619,7 +639,7 @@ class WiiRemoteController(RobotComponent):
         self.device = None
         self.device_path = None
         self.konami_sequence = []
-        self.konami_code = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right', '2', '1']
+        self.konami_code = ['right', 'right', 'left', 'left', 'up', 'down', 'up', 'down', '1', '2']
         self.b_pressed = False
         self._monitor_thread = None
         self._monitoring = False
@@ -677,13 +697,18 @@ class WiiRemoteController(RobotComponent):
         
         # キーコードをボタン名に変換
         button_name = None
+        keycode = key_event.keycode
+        if len(key_event.keycode) <= 3:
+            keycode = key_event.keycode[0]
+        
         if isinstance(key_event.keycode, list):
             for code in key_event.keycode:
+                print(code)
                 if code in self.BUTTON_MAP:
                     button_name = self.BUTTON_MAP[code]
                     break
         else:
-            button_name = self.BUTTON_MAP.get(key_event.keycode)
+            button_name = self.BUTTON_MAP.get(keycode)
         
         if not button_name:
             return
@@ -804,7 +829,11 @@ class GundamRobotController:
         try:
             lcd_address = int(getattr(Config, 'LCD_ADDRESS', '0x27'), 16)
             print(f"LCD初期化中 (アドレス: {hex(lcd_address)})...")
-            self.lcd = LCDController(self.pi, lcd_address)
+            # self.lcd = LCDController(self.pi, lcd_address)
+            self.lcd = LCD1602Test(0x27)
+            self.lcd.connect()
+            self.lcd.init_lcd()
+            
         except Exception as e:
             print(f"LCD初期化エラー: {e}")
             # LCDなしでも動作を続ける（ダミーオブジェクト作成）
@@ -934,8 +963,8 @@ class GundamRobotController:
         """動作モード変更"""
         self.mode = mode
         mode_display = {
-            'battle': ("Mode: Battle", "戦闘モード", "赤外線警戒中"),
-            'standby': ("Mode: Standby", "待機モード", "省エネ中")
+            'battle': ("Mode: Battle", "battle"),
+            'standby': ("Mode: Standby", "wait")
         }
         
         if mode in mode_display:
@@ -945,10 +974,13 @@ class GundamRobotController:
     def show_status(self):
         """ステータス表示"""
         status_text = [
-            f"Mode: {self.mode.upper()}",
-            f"Servo: {self.servo.current_angle}°",
-            f"Uptime: {int(time.time())}s"
+            "Congratulations!",
+            "iglobe 21st!!!"
         ]
+        # status_text = [
+        #     f"Servo: {self.servo.current_angle}°",
+        #     f"Uptime: {int(time.time())}s"
+        # ]
         self.lcd.display_text(*status_text)
         print(f"Status - {', '.join(status_text)}")
         

@@ -85,6 +85,18 @@ class LCD1602Test:
         self._lcd_string(line1, self.LCD_LINE_1)
         self._lcd_string(line2, self.LCD_LINE_2)
     
+    def display_pattern(self, pattern: str):
+        """パターン表示"""
+        patterns = {
+            'startup': ("startup...", ""),
+            'ready': ("ready ok", "please control"),
+            'vulcan': ("shot!", "!!!!!!"),
+            'konami': ("secret command!", "start！！"),
+            'motion': ("motion detect!!", "fire!!")
+        }
+        text = patterns.get(pattern, ("", ""))
+        self.display_text(text[0], text[1])
+
     def _lcd_string(self, message, line):
         """文字列表示"""
         self._lcd_byte(line, self.LCD_CMD)
