@@ -10,12 +10,16 @@ from datetime import datetime
 
 import pigpio
 
-from config import Config
-from hardware import (
-    LEDController, ServoController, CameraController,
-    LCDController, SoundController, IRSensorController
-)
-from communication import SlackUploader, WiiRemoteController
+from config.config import Config
+from hardware.lcd_controller import LCDController
+from hardware.led_controller import LEDController
+from hardware.servo_controller import ServoController
+from hardware.sound_controller import SoundController
+from hardware.camera_controller import CameraController
+from hardware.ir_sensor_controller import IRSensorController
+
+from communication.slack_uploader import SlackUploader
+from communication.wii_remote_controller import WiiRemoteController
 from lcd1602Test import LCD1602Test
 
 

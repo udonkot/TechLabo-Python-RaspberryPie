@@ -7,8 +7,9 @@ import threading
 import evdev
 from evdev import InputDevice, categorize, ecodes
 
-from ..config import DeviceDetector, Config
-from ..config import RobotComponent
+from config.config import Config
+from config.device_detector import DeviceDetector
+from config.robot_component import RobotComponent
 
 
 class WiiRemoteController(RobotComponent):

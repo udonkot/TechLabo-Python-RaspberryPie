@@ -6,8 +6,8 @@
 import time
 import pigpio
 
-from ..config import Config
-from ..config import RobotComponent
+from config.config import Config
+from config.robot_component import RobotComponent
 
 
 class IRSensorController(RobotComponent):

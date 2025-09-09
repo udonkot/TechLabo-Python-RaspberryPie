@@ -8,7 +8,7 @@ from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306
 
-from ..config import RobotComponent
+from config.robot_component import RobotComponent
 
 
 class LCDController(RobotComponent):

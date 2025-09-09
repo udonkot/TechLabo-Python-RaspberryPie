@@ -7,8 +7,8 @@ from pathlib import Path
 import pygame
 from playsound import playsound
 
-from ..config import Config
-from ..config import RobotComponent
+from config.config import Config
+from config.robot_component import RobotComponent
 
 
 class SoundController(RobotComponent):

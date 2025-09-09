@@ -6,7 +6,7 @@ Gundam Robot Controller メインエントリーポイント
 import time
 import subprocess
 
-from config import Config
+from config.config import Config
 from gundam_robot_controller import GundamRobotController
 
 

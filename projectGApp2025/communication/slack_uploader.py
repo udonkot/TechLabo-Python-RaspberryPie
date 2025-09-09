@@ -7,8 +7,8 @@ import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-from ..config import Config
-from ..config import RobotComponent
+from config.config import Config
+from config.robot_component import RobotComponent
 
 
 class SlackUploader(RobotComponent):
