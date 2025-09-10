@@ -1,6 +1,5 @@
 captures
 sounds
-config.json
 venv
 .env
 __pycache__
@@ -685,3 +684,4 @@ venv_org/lib/python3.11/site-packages/setuptools-66.1.1.dist-info/RECORD
 venv_org/lib/python3.11/site-packages/setuptools-66.1.1.dist-info/REQUESTED
 venv_org/lib/python3.11/site-packages/setuptools-66.1.1.dist-info/top_level.txt
 venv_org/lib/python3.11/site-packages/setuptools-66.1.1.dist-info/WHEEL
+projectGApp2025/config.json
