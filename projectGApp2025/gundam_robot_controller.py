@@ -171,19 +171,68 @@ class GundamRobotController:
             self.capture_photo()
         
     def execute_konami_command(self):
-        """コナミコマンド実行"""
-        print("🎮 Secret command activated!")
-        self.lcd.display_pattern('konami')
-        self.led.play_pattern('konami')
-        self.sound.play_sound('konami')
+        """コナミコマンド実行 - 音楽と同期したライトショー"""
+        print("🎮 KONAMI Secret Command Activated!")
+        print("🎵 Special Light Show with BGM Starting...")
         
-        # サーボモーターのダンス
-        thread = threading.Thread(target=self.servo.sweep)
-        thread.daemon = True
-        thread.start()
+        # LCDに特別メッセージを表示
+        self.lcd.display_text("KONAMI CODE!", "Special Show!")
         
-        # BGM開始
-        # self.sound.play_bgm()
+        # 音楽とライトショーを同時開始
+        bgm_thread = threading.Thread(target=self._play_konami_bgm)
+        light_thread = threading.Thread(target=self._play_konami_light_show)
+        servo_thread = threading.Thread(target=self._play_konami_servo_dance)
+        
+        # 全て並行実行
+        bgm_thread.daemon = True
+        light_thread.daemon = True
+        servo_thread.daemon = True
+        
+        bgm_thread.start()
+        light_thread.start()
+        servo_thread.start()
+        
+        print("🌟 KONAMI Command execution started!")
+        
+    def _play_konami_bgm(self):
+        """コナミコマンド用BGMを再生"""
+        try:
+            print("🎵 Playing KONAMI BGM...")
+            self.sound.play_sound('konami')
+        except Exception as e:
+            print(f"BGM再生エラー: {e}")
+    
+    def _play_konami_light_show(self):
+        """コナミコマンド用の特別ライトショーを実行"""
+        try:
+            print("💡 Starting KONAMI Light Show...")
+            # JSONパターンが利用可能な場合はそれを使用
+            if hasattr(self.led, 'json_patterns') and 'konami_special' in self.led.json_patterns:
+                print("🎭 Using JSON pattern: konami_special")
+                success = self.led.play_json_pattern('konami_special')
+                if success:
+                    print("✅ JSON pattern executed successfully")
+                else:
+                    print("❌ JSON pattern failed, falling back to default")
+                    self.led.play_pattern('konami')
+            else:
+                print("🔄 Using default konami pattern")
+                self.led.play_pattern('konami')
+        except Exception as e:
+            print(f"ライトショーエラー: {e}")
+            # フォールバック: デフォルトパターン
+            self.led.play_pattern('konami')
+    
+    def _play_konami_servo_dance(self):
+        """コナミコマンド用のサーボダンス"""
+        try:
+            print("🤖 Starting servo dance...")
+            # 5秒待機してからサーボダンス開始（音楽のタイミングに合わせて）
+            time.sleep(5.0)
+            self.servo.sweep()
+            print("✅ Servo dance completed")
+        except Exception as e:
+            print(f"サーボダンスエラー: {e}")
 
     def execute_combo_command(self, button: str):
         """Bボタンコンボコマンド"""
@@ -256,6 +305,7 @@ class GundamRobotController:
             print("  HOMEボタン  : ステータス表示")
             print("  Bボタン+他  : コンボ技")
             print("\n🎮 隠しコマンド: ↑↑↓↓←→←→②①")
+            print("     └─ 30秒間の特別ライトショー + BGM!")
             print("\n終了: Ctrl+C")
             print("="*60 + "\n")
             
@@ -282,6 +332,10 @@ class GundamRobotController:
         """全体のクリーンアップ"""
         self.is_running = False
         print("Cleaning up...")
+        
+        # 実行中のパターンを停止
+        if hasattr(self.led, 'stop_pattern'):
+            self.led.stop_pattern()
         
         # BGM停止
         self.sound.stop_bgm()
