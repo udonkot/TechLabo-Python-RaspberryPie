@@ -484,3 +484,23 @@ class LEDController(RobotComponent):
             else:
                 self.pi.set_PWM_dutycycle(pin, 0)
                 self.pi.write(pin, 0)
+
+    def all_on(self):
+        """すべてのLEDを点灯"""
+        for pin in self.pins.values():  # self.pins.values()を使用してピンを取得
+            if isinstance(pin, list):  # ピンがリストの場合
+                for p in pin:
+                    self.pi.write(p, 1)  # 各ピンをHIGHに設定
+            else:  # ピンが単一の整数の場合
+                self.pi.write(pin, 1)  # ピンをHIGHに設定
+        print("✅ All LEDs are ON")
+
+    def all_off(self):
+        """すべてのLEDを消灯"""
+        for pin in self.pins.values():  # self.pins.values()を使用してピンを取得
+            if isinstance(pin, list):  # ピンがリストの場合
+                for p in pin:
+                    self.pi.write(p, 0)  # 各ピンをLOWに設定
+            else:  # ピンが単一の整数の場合
+                self.pi.write(pin, 0)  # ピンをLOWに設定
+        print("✅ All LEDs are OFF")

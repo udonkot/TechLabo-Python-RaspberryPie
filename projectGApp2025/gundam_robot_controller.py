@@ -230,6 +230,12 @@ class GundamRobotController:
             # 5秒待機してからサーボダンス開始（音楽のタイミングに合わせて）
             time.sleep(5.0)
             self.servo.sweep()
+            time.sleep(3.0)
+            self.servo.smooth_move(120)
+            time.sleep(3.0)
+            self.servo.sweep()
+            time.sleep(3.0)
+            self.servo.smooth_move(60)
             print("✅ Servo dance completed")
         except Exception as e:
             print(f"サーボダンスエラー: {e}")
@@ -240,14 +246,24 @@ class GundamRobotController:
             'up': ('wave', 'Wave Pattern'),
             'down': ('rainbow', 'Rainbow'),
             'left': ('alert', 'Alert!'),
-            'right': ('startup', 'Startup')
+            'right': ('startup', 'Startup'),
+            '2': ('all_on', 'All LEDs On'),
+            '1': ('all_off', 'All LEDs Off')            
         }
         
         if button in combos:
             pattern, display_name = combos[button]
             print(f"Combo activated: B + {button.upper()}")
             self.lcd.display_text("Combo!", f"B + {button.upper()}")
-            self.led.play_pattern(pattern)
+
+            if pattern == 'all_on':
+                print(  "All LEDs On")
+                self.led.all_on()  # 全点灯
+            elif pattern == 'all_off':
+                print(  "All LEDs Off")
+                self.led.all_off()  # 全消灯
+            else:
+                self.led.play_pattern(pattern)
             
     def change_mode(self, mode: str):
         """動作モード変更"""

@@ -14,9 +14,9 @@ class Config:
     PINS = {
         'servo': 18,
         'leds': {
-            'face_head': 16,
-            'face_eyes': 21,
-            'face_vulcan': 20,
+            'face_head': 21,
+            'face_eyes': 20,
+            'face_vulcan': 16,
             'shoulder_right_up': 6,
             'shoulder_left_up': 19,
             'shoulder_right_down': 13,

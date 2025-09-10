@@ -71,7 +71,74 @@
                 "time": 28.0,
                 "action": "fade_out_all",
                 "duration": 2.0
-            }
+            },
+            {
+                "time": 30.0,
+                "action": "fade_in_all",
+                "duration": 1.0,
+                "brightness": 255
+            },
+            {
+                "time": 31.0,
+                "action": "flash_sequence",
+                "duration": 2.0,
+                "sequence": ["face_head", "face_eyes", "face_vulcan"],
+                "flash_interval": 0.1
+            },
+            {
+                "time": 33.0,
+                "action": "wave_pattern",
+                "duration": 3.0,
+                "direction": "top_to_bottom",
+                "wave_speed": 0.2
+            },
+            {
+                "time": 36.0,
+                "action": "pulsing",
+                "duration": 4.0,
+                "leds": ["chest", "back"],
+                "pulse_speed": 0.5,
+                "brightness_range": [50, 255]
+            },
+            {
+                "time": 40.0,
+                "action": "synchronized_flash",
+                "duration": 2.0,
+                "flash_pattern": [0.1, 0.1, 0.2, 0.1, 0.1, 0.5],
+                "leds": "all"
+            },
+            {
+                "time": 52.0,
+                "action": "rainbow_sweep",
+                "duration": 5.0,
+                "groups": [
+                    ["face_head", "face_eyes"],
+                    ["shoulder_right_up", "shoulder_left_up"],
+                    ["chest"],
+                    ["back"],
+                    ["foot_left", "foot_right"]
+                ],
+                "sweep_interval": 0.3
+            },
+            {
+                "time": 57.0,
+                "action": "breathing",
+                "duration": 6.0,
+                "leds": "all",
+                "breath_cycle": 2.0
+            },
+            {
+                "time": 63.0,
+                "action": "finale_burst",
+                "duration": 5.0,
+                "burst_count": 10,
+                "burst_interval": 0.2
+            },
+            {
+                "time": 68.0,
+                "action": "fade_out_all",
+                "duration": 2.0
+            }            
         ]
     },
     "startup": {
