@@ -1,3 +1,6 @@
+captures
+sounds
+config.json
 venv
 .env
 __pycache__

@@ -42,7 +42,7 @@ class GundamRobotController:
             ("- Button : Standby", "Mode"),
             ("HOME : Show Status", ""),
             ("B+Others : Combo", "Tech"),
-            ("Secret:", "↑↑↓↓←→←→21"),
+            ("Secret:", "Hint:KONAMI"),
         ]
         self.help_index = 0
         
@@ -93,7 +93,7 @@ class GundamRobotController:
         self.led.play_pattern('startup')
         self.sound.play_sound('startup')
         self.servo.move_to_angle(90)
-        time.sleep(2)
+        # time.sleep(2)
         self.lcd.display_pattern('ready')
         print("起動完了！")
         
@@ -183,8 +183,8 @@ class GundamRobotController:
         thread.start()
         
         # BGM開始
-        self.sound.play_bgm()
-        
+        # self.sound.play_bgm()
+
     def execute_combo_command(self, button: str):
         """Bボタンコンボコマンド"""
         combos = {

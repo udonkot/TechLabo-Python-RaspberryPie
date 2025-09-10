@@ -88,10 +88,11 @@ class WiiRemoteController(RobotComponent):
     def handle_key_event(self, event):
         """キーイベントを処理"""
         key_event = categorize(event)
-        
+
         # キーコードをボタン名に変換
         button_name = None
         keycode = key_event.keycode
+        print(keycode)  # デバッグ用
         if len(key_event.keycode) <= 3:
             keycode = key_event.keycode[0]
         

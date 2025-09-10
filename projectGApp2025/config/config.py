@@ -14,15 +14,15 @@ class Config:
     PINS = {
         'servo': 18,
         'leds': {
-            'face_head': 21,
-            'face_eyes': 20,
-            'face_vulcan': 12,
-            'shoulder_right_up': 26,
+            'face_head': 16,
+            'face_eyes': 21,
+            'face_vulcan': 20,
+            'shoulder_right_up': 6,
             'shoulder_left_up': 19,
-            'shoulder_right_down': 16,
-            'shoulder_left_down': 15,
-            'chest': [6, 24],
-            'back': 13,
+            'shoulder_right_down': 13,
+            'shoulder_left_down': 26,
+            'chest': [25, 24],
+            'back': 5,
             'foot_left': [23, 17],
             'foot_right': [27, 22]
         },
