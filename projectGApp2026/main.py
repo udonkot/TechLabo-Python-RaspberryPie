@@ -19,7 +19,7 @@ def build_message(result):
 
 
 def main():
-    camera = CameraCapture(config.CAMERA_INDEX)
+    camera = CameraCapture(config.CAMERA_INDEX, config.CAMERA_BACKEND)
     vision = VisionAnalyzer(config.VISION_ENDPOINT, config.VISION_KEY)
     speaker = SpeechSpeaker(
         config.SPEECH_KEY, config.SPEECH_REGION,

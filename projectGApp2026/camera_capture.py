@@ -1,18 +1,47 @@
 import cv2
 
+try:
+    from picamera2 import Picamera2
+except ImportError:
+    Picamera2 = None
+
 
 class CameraCapture:
-    """接続されたカメラ(USBカメラ/PiCamera)から画像を取得する"""
+    """接続されたカメラ(USBカメラ/PiCamera)から画像を取得する
 
-    def __init__(self, camera_index=0):
-        self.capture = cv2.VideoCapture(camera_index)
-        if not self.capture.isOpened():
-            raise RuntimeError(f'カメラ(index={camera_index})を開けませんでした')
+    backend='opencv'    : USBウェブカメラなど、V4L2で直接読めるカメラ向け
+    backend='picamera2' : Raspberry Pi Camera Module(CSI, libcameraスタック)向け
+    """
+
+    def __init__(self, camera_index=0, backend='opencv'):
+        self.backend = backend
+
+        if backend == 'picamera2':
+            if Picamera2 is None:
+                raise RuntimeError(
+                    'picamera2がインストールされていません。'
+                    'sudo apt install -y python3-picamera2 を実行し、'
+                    'venvは --system-site-packages で作り直してください'
+                )
+            self.picam2 = Picamera2()
+            still_config = self.picam2.create_still_configuration(
+                main={'size': (1280, 720)}
+            )
+            self.picam2.configure(still_config)
+            self.picam2.start()
+        else:
+            self.capture = cv2.VideoCapture(camera_index)
+            if not self.capture.isOpened():
+                raise RuntimeError(f'カメラ(index={camera_index})を開けませんでした')
 
     def capture_jpeg_bytes(self):
-        ok, frame = self.capture.read()
-        if not ok:
-            raise RuntimeError('カメラからのフレーム取得に失敗しました')
+        if self.backend == 'picamera2':
+            frame = self.picam2.capture_array()
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        else:
+            ok, frame = self.capture.read()
+            if not ok:
+                raise RuntimeError('カメラからのフレーム取得に失敗しました')
 
         ok, buffer = cv2.imencode('.jpg', frame)
         if not ok:
@@ -21,4 +50,7 @@ class CameraCapture:
         return buffer.tobytes()
 
     def release(self):
-        self.capture.release()
+        if self.backend == 'picamera2':
+            self.picam2.stop()
+        else:
+            self.capture.release()

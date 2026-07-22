@@ -22,14 +22,34 @@ sudo apt update
 sudo apt install -y libasound2 libssl-dev build-essential
 ```
 
-カメラが `/dev/video0` として認識されているか確認してください。
+### USBウェブカメラの場合
+
+`/dev/video0` として認識されているか確認してください。`.env`は `CAMERA_BACKEND=opencv` のままでOKです。
 
 ```bash
 ls /dev/video*
 ```
 
-Piカメラ(リボンケーブル接続)を使う場合は `raspi-config` でカメラを有効化し、
-legacy camera / libcamera の v4l2互換レイヤーを有効にしてください。
+### Raspberry Pi Camera Module(CSIリボンケーブル接続)の場合
+
+Bullseye以降のRaspberry Pi OSはlibcameraスタックが標準のため、
+OpenCVの`cv2.VideoCapture`では映像を取得できず起動時にハングすることがあります。
+`rpicam-hello` / `libcamera-hello` でカメラが映ることを確認したら、
+`.env`で `CAMERA_BACKEND=picamera2` を指定し、picamera2を使ってください。
+
+```bash
+sudo apt install -y python3-picamera2
+```
+
+picamera2はシステムパッケージなので、venvは `--system-site-packages` を付けて作成してください。
+
+```bash
+python -m venv --system-site-packages venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
+
+USBカメラのみを使う場合は通常のvenvで構いません。
 
 ```bash
 python -m venv venv

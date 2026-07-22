@@ -14,6 +14,7 @@ SPEECH_VOICE = os.getenv('AZURE_SPEECH_VOICE', 'ja-JP-NanamiNeural')
 SPEECH_LANGUAGE = os.getenv('AZURE_SPEECH_LANGUAGE', 'ja-JP')
 
 # カメラ・検出設定
+CAMERA_BACKEND = os.getenv('CAMERA_BACKEND', 'opencv')  # 'opencv' or 'picamera2'
 CAMERA_INDEX = int(os.getenv('CAMERA_INDEX', '0'))
 CAPTURE_INTERVAL_SEC = float(os.getenv('CAPTURE_INTERVAL_SEC', '5'))
 CONFIDENCE_THRESHOLD = float(os.getenv('CONFIDENCE_THRESHOLD', '0.6'))
