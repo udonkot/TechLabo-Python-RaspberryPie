@@ -48,12 +48,12 @@ class CameraController(RobotComponent):
         filename = f"capture_{timestamp}.jpg"
         filepath = Path(f"./captures/{filename}")
         filepath.parent.mkdir(exist_ok=True)
-        
+
         # カウントダウン
-        for i in range(Config.CAMERA_PREVIEW_TIME, 0, -1):
-            if self.lcd:
-                self.lcd.display_text(f"Count Down...: {i}", "Smile!")
-            time.sleep(1)
+        # for i in range(Config.CAMERA_PREVIEW_TIME, 0, -1):
+        #     if self.lcd:
+        #         self.lcd.display_text(f"Count Down...: {i}", "Smile!")
+        #     time.sleep(1)
         
         if self.lcd:
             self.lcd.display_text("Fire!!", "Cheeese!!!")

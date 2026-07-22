@@ -23,12 +23,18 @@ class SoundController(RobotComponent):
     def load_sounds(self):
         """サウンドファイルを読み込む"""
         sound_files = {
-            'vulcan': 'vulcan.wav',
+            'vulcan': 'vulcan.mp3',
             'startup': 'monoai.mp3',
-            'capture': 'shutter.wav',
+            'capture': 'vulcan.wav',
             'alert': 'alert.wav',
             'konami': 'gundamBGM1.mp3',
-            'bgm': 'gundam_op.mp3'
+            'bgm': 'gundam_op.mp3',
+            'congratsEN': 'iglobeCongratulations.wav',
+            'congratsJP': 'iglobeCongratulations_jp.wav',
+            'secretEN': 'projectGAudio_konami_en.wav',
+            'secretJP': 'projectGAudio_konami_jp.wav',
+            'cameraJP': 'projectGAudio_cameraBefore_jp.wav',
+            'slackupJP': 'projectGAudio_slackupload_jp.wav'
         }
         
         Path(Config.SOUNDS_DIR).mkdir(exist_ok=True)

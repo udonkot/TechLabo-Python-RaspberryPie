@@ -867,7 +867,7 @@ class GundamRobotController:
         self.led.play_pattern('startup')
         self.sound.play_sound('startup')
         self.servo.move_to_angle(90)
-        time.sleep(2)
+        # time.sleep(2)
         self.lcd.display_pattern('ready')
         print("起動完了！")
         

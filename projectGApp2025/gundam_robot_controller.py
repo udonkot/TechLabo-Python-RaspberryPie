@@ -135,9 +135,10 @@ class GundamRobotController:
     def capture_photo(self):
         """写真撮影とSlackアップロード"""
         print("写真撮影開始")
+        self.sound.play_sound('cameraJP')
         filepath = self.camera.capture_with_countdown()
         if filepath:
-            self.sound.play_sound('capture')
+            # self.sound.play_sound('capture')
             print(f"写真保存: {filepath}")
             
             # Slack アップロードを非同期で実行
@@ -154,6 +155,7 @@ class GundamRobotController:
         if self.slack.upload_image(filepath, message):
             print("Slack upload successful")
             self.lcd.display_text("Upload OK", "Slack sent")
+            self.sound.play_sound('slackupJP')
         else:
             print("Slack upload failed")
             self.lcd.display_text("Upload Failed", "Send failed")
@@ -161,19 +163,21 @@ class GundamRobotController:
     def on_motion_detected(self):
         """モーション検知時の処理"""
         print("Motion detected!")
-        self.lcd.display_pattern('motion')
+        # self.lcd.display_pattern('motion')
         self.led.play_pattern('alert')
-        self.sound.play_sound('alert')
+        # self.sound.play_sound('alert')
         
         # 自動撮影（バトルモードの場合のみ）
         if self.mode == 'battle':
             time.sleep(1)  # 少し待機
-            self.capture_photo()
+            # self.capture_photo()
         
     def execute_konami_command(self):
         """コナミコマンド実行 - 音楽と同期したライトショー"""
         print("🎮 KONAMI Secret Command Activated!")
         print("🎵 Special Light Show with BGM Starting...")
+
+        self.sound.play_sound('secretJP')
         
         # LCDに特別メッセージを表示
         self.lcd.display_text("KONAMI CODE!", "Special Show!")
@@ -269,8 +273,8 @@ class GundamRobotController:
         """動作モード変更"""
         self.mode = mode
         mode_display = {
-            'battle': ("Mode: Battle", "Armed"),
-            'standby': ("Mode: Standby", "Waiting")
+            'battle': ("Mode: Japanese", ""),
+            'standby': ("Mode: English", "")
         }
         
         if mode in mode_display:
@@ -285,6 +289,11 @@ class GundamRobotController:
         ]
         self.lcd.display_text(*status_text)
         print(f"Status - {', '.join(status_text)}")
+
+        if self.mode == 'standby':
+            self.sound.play_sound('congratsEN')
+        else :
+            self.sound.play_sound('congratsJP')
         
     def start_ir_monitoring(self):
         """赤外線センサー監視開始"""
