@@ -172,3 +172,70 @@
     margin-right: px; /* 必要に応じて調整 */
     white-space: nowrap; /* テキストを折り返さない */
 }
+
+.logout-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f8f9fa; /* 背景色を設定 */
+    border-top: 1px solid #e7e7e7; /* 上部に境界線を追加 */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+.switch-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* 各スイッチ間に余白を追加 */
+}
+
+.switch-container .custom-control-label {
+    margin-right: 10px; /* ラベルと状態表示の間に余白を追加 */
+}
+
+.switch-container div {
+    flex-grow: 1; /* divを左寄せにする */
+}
+
+body {
+    background-image: url('../images/CUSTOM_G_HEAD.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 背景画像をスクロールに対して固定 */
+
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 50%;
+    height: 100%;
+    /* display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+.psudo-line-lt {
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(to left top, transparent 49.5%, black 49.5%, black 50.5%, transparent 50.5%);
+}

@@ -1,3 +1,4 @@
+import random
 import time
 import RPi.GPIO as GPIO
 
@@ -61,4 +62,16 @@ def singleLighting(gpioList, sleep):
         time.sleep(sleep)
         lightsOff([gpioNum])
 
+# ランダムでLEDを点灯して消灯
+def randomLighting(gpioList, sleep, count):
+    i = 0
+    # 乱数を使うために追加
+    while i < count:
+        random.shuffle(gpioList)
+        for gpioNum in gpioList:
+            time.sleep(sleep)
+            lightsOn([gpioNum])
+            time.sleep(sleep)
+            lightsOff([gpioNum])
+        i = i+1
 
