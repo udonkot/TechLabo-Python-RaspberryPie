@@ -28,8 +28,9 @@ class CameraCapture:
                     'venvは --system-site-packages で作り直してください'
                 )
             self.picam2 = Picamera2()
+            # format='BGR888'を明示。picamera2はこの並びで既にOpenCV(BGR)互換のため変換不要。
             still_config = self.picam2.create_still_configuration(
-                main={'size': (1280, 720)}
+                main={'size': (1280, 720), 'format': 'BGR888'}
             )
             self.picam2.configure(still_config)
             self.picam2.start()
@@ -43,7 +44,6 @@ class CameraCapture:
     def capture_jpeg_bytes(self):
         if self.backend == 'picamera2':
             frame = self.picam2.capture_array()
-            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         else:
             ok, frame = self.capture.read()
             if not ok:
