@@ -1,3 +1,5 @@
+import time
+
 import cv2
 
 try:
@@ -31,6 +33,8 @@ class CameraCapture:
             )
             self.picam2.configure(still_config)
             self.picam2.start()
+            # 自動露出・ホワイトバランスが安定するまで待つ
+            time.sleep(2)
         else:
             self.capture = cv2.VideoCapture(camera_index)
             if not self.capture.isOpened():

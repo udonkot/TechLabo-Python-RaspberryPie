@@ -1,9 +1,12 @@
 import time
+from pathlib import Path
 
 import config
 from camera_capture import CameraCapture
 from vision_analyzer import VisionAnalyzer
 from speech_speaker import SpeechSpeaker
+
+CAPTURES_DIR = Path(__file__).parent / 'captures'
 
 
 def build_message(result):
@@ -34,6 +37,9 @@ def main():
             try:
                 print('撮影中...', flush=True)
                 image_bytes = camera.capture_jpeg_bytes()
+
+                CAPTURES_DIR.mkdir(exist_ok=True)
+                (CAPTURES_DIR / 'last_frame.jpg').write_bytes(image_bytes)
 
                 print('Azure Visionで解析中...', flush=True)
                 result = vision.analyze(image_bytes, config.CONFIDENCE_THRESHOLD)
