@@ -26,14 +26,19 @@ def main():
         config.SPEECH_VOICE, config.SPEECH_LANGUAGE,
     )
 
-    print('物体・顔識別を開始します。Ctrl+Cで終了します。')
+    print('物体・顔識別を開始します。Ctrl+Cで終了します。', flush=True)
     last_message = None
 
     try:
         while True:
             try:
+                print('撮影中...', flush=True)
                 image_bytes = camera.capture_jpeg_bytes()
+
+                print('Azure Visionで解析中...', flush=True)
                 result = vision.analyze(image_bytes, config.CONFIDENCE_THRESHOLD)
+                print(f'解析結果: {result}', flush=True)
+
                 message = build_message(result)
 
                 if message and message != last_message:
@@ -41,10 +46,11 @@ def main():
                     speaker.speak(message)
                     last_message = message
                 elif not message:
+                    print('検出なし')
                     last_message = None
 
             except Exception as e:
-                print(f'識別処理でエラーが発生しました: {e}')
+                print(f'識別処理でエラーが発生しました: {e}', flush=True)
 
             time.sleep(config.CAPTURE_INTERVAL_SEC)
 
