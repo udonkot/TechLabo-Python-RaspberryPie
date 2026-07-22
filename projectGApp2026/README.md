@@ -38,15 +38,30 @@ OpenCVの`cv2.VideoCapture`では映像を取得できず起動時にハング�
 `.env`で `CAMERA_BACKEND=picamera2` を指定し、picamera2を使ってください。
 
 ```bash
-sudo apt install -y python3-picamera2
+sudo apt install -y python3-picamera2 python3-opencv python3-numpy
 ```
 
-picamera2はシステムパッケージなので、venvは `--system-site-packages` を付けて作成してください。
+picamera2・opencv・numpyはすべてシステムパッケージ(apt版)を使い、
+venvは `--system-site-packages` を付けて作成してください。
+`requirements.txt` の `opencv-python` をpipで入れてしまうと、
+apt版とはABIが異なるnumpyがvenv内にインストールされ、
+`ValueError: numpy.dtype size changed, may indicate binary incompatibility`
+のようなエラーでpicamera2/simplejpegが起動時にクラッシュします。
 
 ```bash
 python -m venv --system-site-packages venv
 source ./venv/bin/activate
-pip install -r requirements.txt
+pip install requests python-dotenv azure-cognitiveservices-speech
+```
+
+(`opencv-python`と`numpy`は上記コマンドでは意図的に入れていません。venvが
+`--system-site-packages`のため、aptで入れたものがそのまま使われます)
+
+もし既にvenv内へ`opencv-python`や`numpy`をpipでインストールしてしまっている場合は、
+削除してからaptの方を使うようにしてください。
+
+```bash
+pip uninstall -y opencv-python opencv-python-headless numpy
 ```
 
 USBカメラのみを使う場合は通常のvenvで構いません。

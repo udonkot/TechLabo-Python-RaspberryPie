@@ -2,7 +2,9 @@ import cv2
 
 try:
     from picamera2 import Picamera2
-except ImportError:
+except Exception:
+    # 未インストールに加え、numpyのABI不一致等でもここに落ちてくる。
+    # backend='opencv'利用時にpicamera2が壊れていても起動できるようにする。
     Picamera2 = None
 
 
