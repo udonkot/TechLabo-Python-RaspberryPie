@@ -28,9 +28,10 @@ class CameraCapture:
                     'venvは --system-site-packages で作り直してください'
                 )
             self.picam2 = Picamera2()
-            # format='BGR888'を明示。picamera2はこの並びで既にOpenCV(BGR)互換のため変換不要。
+            # 注意: picamera2はフォーマット名が実際のチャンネル順と逆になる仕様。
+            # format='RGB888'を指定すると実データはBGR順(OpenCV互換)で得られるため変換不要。
             still_config = self.picam2.create_still_configuration(
-                main={'size': (1280, 720), 'format': 'BGR888'}
+                main={'size': (1280, 720), 'format': 'RGB888'}
             )
             self.picam2.configure(still_config)
             self.picam2.start()

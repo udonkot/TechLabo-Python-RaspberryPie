@@ -7,6 +7,10 @@ load_dotenv()
 VISION_ENDPOINT = os.getenv('AZURE_VISION_ENDPOINT', '').rstrip('/')
 VISION_KEY = os.getenv('AZURE_VISION_KEY', '')
 
+# 顔認識(ローカル, face_recognition) - 人物の個人識別。Azureは使わずPi上で処理する
+KNOWN_FACES_DIR = os.getenv('KNOWN_FACES_DIR', './known_faces')
+FACE_MATCH_TOLERANCE = float(os.getenv('FACE_MATCH_TOLERANCE', '0.6'))
+
 # Azure AI Speech - 音声合成
 SPEECH_KEY = os.getenv('AZURE_SPEECH_KEY', '')
 SPEECH_REGION = os.getenv('AZURE_SPEECH_REGION', '')
